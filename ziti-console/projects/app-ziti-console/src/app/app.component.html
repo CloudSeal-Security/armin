@@ -1,0 +1,13 @@
+<div *ngIf="!loading" class="main" [ngClass]="{sideNavClosed: !displayNav}">
+    <div class="side">
+        <ng-container *ngIf="isAuthorized">
+            <lib-side-toolbar *ngIf="displayTool" ></lib-side-toolbar>
+            <lib-side-navbar *ngIf="displayNav" [version]="version"></lib-side-navbar>
+        </ng-container>
+    </div>
+    <div class="page">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<lib-growler></lib-growler>
+<lib-loading-indicator *ngIf="loading" [isLoading]="loading"></lib-loading-indicator>

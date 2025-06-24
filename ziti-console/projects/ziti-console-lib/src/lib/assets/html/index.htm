@@ -1,0 +1,1658 @@
+<style>
+    /* 全局 select2 選項文字顏色 */
+    .select2-container--default .select2-results__option,
+    .select2-container .select2-results__option,
+    .select2-results__option,
+    .select2-container--default .select2-results__option--highlighted[aria-selected],
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        color: #e28015 !important;
+    }
+
+    .overlay {
+        left: 0px;
+        top: 0px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(52deg, var(--primary) 10%,var(--secondary) 60%,var(--secondary) 100%);
+        opacity: 0.2;
+    }
+
+    #DashHeader {
+        position: relative;
+        z-index: 1;
+    }
+
+    #DashHeader.grid.dashboard {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    #DashHeader .grid.numbers {
+        background: rgba(19, 20, 31, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: grid;
+        grid-template-columns: 5rem repeat(7, minmax(6rem, 1fr));
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 1rem;
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    #DashHeader .grid.numbers:hover {
+        background: rgba(19, 20, 31, 0.7);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    #DashHeader .totalPod {
+        background: rgba(26, 27, 38, 0.4);
+        border-radius: 8px;
+        padding: 0.75rem 0.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 5rem;
+        min-width: 6rem;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        gap: 0.5rem;
+        position: relative;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #DashHeader .totalPod::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    #DashHeader .totalPod:hover {
+        background: rgba(26, 27, 38, 0.8);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        border-color: var(--primary);
+    }
+
+    #DashHeader .totalPod:hover::before {
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+    }
+
+    #DashHeader .totalPod .total {
+        color: var(--primary);
+        font-size: 1.75rem;
+        font-weight: 600;
+        text-align: center;
+        width: 100%;
+        line-height: 1.2;
+        padding: 0.25rem 0;
+        margin: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #DashHeader .totalPod:hover .total {
+        transform: scale(1.05);
+        text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+    }
+
+    #DashHeader .totalPod .label {
+        color: var(--text);
+        font-size: 0.875rem;
+        opacity: 0.9;
+        text-align: center;
+        width: 100%;
+        line-height: 1.2;
+        padding: 0.25rem 0;
+        margin: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #DashHeader .totalPod:hover .label {
+        opacity: 1;
+        transform: translateY(2px);
+    }
+
+    /* 添加 CSS 變量用於陰影效果 */
+    :root {
+        --primary-rgb: 0, 123, 255; /* 根據實際的 primary 顏色調整 */
+    }
+
+    #DashHeader .dial {
+        width: 5rem !important;
+        height: 5rem !important;
+        background-size: contain;
+        background-position: center;
+        margin: auto;
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    /* 添加響應式布局 */
+    @media (max-width: 1400px) {
+        #DashHeader.grid.dashboard {
+            padding: 1rem 0.5rem;
+        }
+        
+        #DashHeader .grid.numbers {
+            grid-template-columns: 5rem repeat(7, minmax(5rem, 1fr));
+            gap: 0.5rem;
+            padding: 0.75rem;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        #DashHeader .grid.numbers {
+            grid-template-columns: 5rem repeat(7, minmax(4rem, 1fr));
+            gap: 0.5rem;
+            padding: 0.75rem;
+        }
+    }
+
+    /* NavLinks 玻璃效果 */
+    #NavLinks {
+        position: relative;
+        z-index: 1;
+    }
+
+    #NavLinks .grid.split.wide {
+        background: rgba(19, 20, 31, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        justify-items: center;
+    }
+
+    #NavLinks .grid.split.wide:hover {
+        background: rgba(19, 20, 31, 0.7);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    #NavLinks .iconLink {
+        background: rgba(26, 27, 38, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #NavLinks .iconLink::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    #NavLinks .iconLink:hover {
+        background: rgba(26, 27, 38, 0.8);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        border-color: var(--primary);
+    }
+
+    #NavLinks .iconLink:hover::before {
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+    }
+
+    #NavLinks .iconLink:hover .network-visualizer {
+        transform: scale(1.1);
+    }
+
+    #NavLinks .iconLink:hover .label {
+        opacity: 1;
+        transform: translateY(2px);
+    }
+
+    #NavLinks .network-visualizer {
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    #NavLinks .label {
+        color: var(--text);
+        font-size: 1rem;
+        opacity: 0.9;
+        text-align: center;
+        margin: 0.25rem 0;
+    }
+
+    .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 1rem 0;
+    }
+
+    .header .title {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    #DashHeader .iconLink {
+        background: rgba(26, 27, 38, 0.4);
+        border-radius: 8px;
+        padding: 0.75rem 0.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 5rem;
+        min-width: 6rem;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        gap: 0.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #DashHeader .iconLink::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    #DashHeader .iconLink:hover {
+        background: rgba(26, 27, 38, 0.8);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        border-color: var(--primary);
+    }
+
+    #DashHeader .iconLink:hover::before {
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+    }
+
+    #DashHeader .network-visualizer {
+        background-image: url(./svgs/v8visualizer.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        filter: brightness(0) invert(1); /* 將圖標顏色改為白色 */
+    }
+
+    #DashHeader .iconLink:hover .network-visualizer {
+        transform: scale(1.1);
+        filter: brightness(0) invert(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+    }
+
+    #DashHeader .iconLink .label {
+        color: var(--text);
+        font-size: 0.875rem;
+        opacity: 0.9;
+        text-align: center;
+        width: 100%;
+        line-height: 1.2;
+        padding: 0.25rem 0;
+        margin: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #DashHeader .iconLink:hover .label {
+        opacity: 1;
+        transform: translateY(2px);
+    }
+
+    #DashHeader .iconLink .topology-icon {
+        background-image: url(/assets/images/topology.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #DashHeader .iconLink:hover .topology-icon {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+    }
+
+    /* 移除舊的 NavLinks 樣式 */
+    #NavLinks {
+        display: none;
+    }
+
+    /* Sessions Container Styles */
+    .sessions-container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin: 1rem 0;
+        max-width: 720px;
+        min-height: 150px;
+    }
+
+    #MainMap {
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 1rem;
+    }
+
+    .sessions-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .header-title {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .header-title h2 {
+        color: var(--text);
+        margin: 0;
+        font-size: 1.25rem;
+    }
+
+    .sessions-stats {
+        color: var(--primary);
+        font-size: 1.1rem;
+        background: rgba(var(--primary-rgb), 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+    }
+
+    .header-actions {
+        display: none;
+    }
+
+    .refresh-button {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.9);
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+        height: 32px;
+    }
+
+    .refresh-button:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .refresh-icon {
+        width: 14px;
+        height: 14px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 4v6h-6'/%3E%3Cpath d='M1 20v-6h6'/%3E%3Cpath d='M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .sessions-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .sessions-filters {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .filter-group {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .search-input {
+        width: 100%;
+        background: rgba(26, 27, 38, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text);
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+        height: 32px;
+    }
+
+    .search-input:focus {
+        border-color: var(--primary);
+        outline: none;
+    }
+
+    .sessions-list {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+
+    .session-card {
+        background: rgba(26, 27, 38, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 1.25rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .session-card:hover {
+        background: rgba(26, 27, 38, 0.8);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-color: var(--primary);
+    }
+
+    .session-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .session-id {
+        font-family: monospace;
+        font-size: 0.875rem;
+        color: var(--text);
+        opacity: 0.7;
+    }
+
+    .session-type {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        background: rgba(var(--primary-rgb), 0.1);
+        color: var(--primary);
+    }
+
+    .session-info {
+        display: grid;
+        gap: 0.75rem;
+    }
+
+    .info-row {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 0.5rem;
+    }
+
+    .info-label {
+        color: var(--text);
+        opacity: 0.7;
+        font-size: 0.875rem;
+    }
+
+    .info-value {
+        color: var(--text);
+        font-weight: 500;
+    }
+
+    .info-value a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .info-value a:hover {
+        text-decoration: underline;
+    }
+
+    .session-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        margin-top: 0.75rem;
+    }
+
+    .session-status.active {
+        background: rgba(40, 167, 69, 0.2);
+        color: #28a745;
+    }
+
+    .session-status.inactive {
+        background: rgba(108, 117, 125, 0.2);
+        color: #6c757d;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    .status-dot.active {
+        background: #28a745;
+        box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+    }
+
+    .status-dot.inactive {
+        background: #6c757d;
+    }
+
+    .loading-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        width: 100%;
+        min-height: 200px;
+    }
+
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(var(--primary-rgb), 0.3);
+        border-radius: 50%;
+        border-top-color: var(--primary);
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+        color: var(--text);
+        font-size: 1rem;
+        opacity: 0.8;
+    }
+
+    .error-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        width: 100%;
+        min-height: 200px;
+        text-align: center;
+    }
+
+    .error-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .error-message {
+        color: var(--text);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .retry-button {
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+    }
+
+    .retry-button:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .no-sessions {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text);
+        opacity: 0.7;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .sessions-list {
+            grid-template-columns: 1fr;
+        }
+
+        .sessions-filters {
+            flex-direction: column;
+        }
+    }
+
+    .sessions-table {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+        width: 100%;
+        font-size: 0.75rem;
+    }
+
+    .table-header {
+        display: grid;
+        grid-template-columns: 35px 2fr 2fr 2.5fr 2.5fr;
+        padding: 8px 0;
+        background: rgba(0, 0, 0, 0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        gap: 8px;
+        font-size: 0.75rem;
+    }
+
+    .col-no {
+        grid-column: 1;
+        padding: 0 4px;
+        font-weight: 500;
+        color: #e0e0e0;
+        text-align: center;
+        min-width: 35px;
+    }
+
+    .col-identity {
+        grid-column: 2;
+        padding: 0 4px;
+        font-weight: 500;
+        color: #e0e0e0;
+        text-align: left;
+        min-width: 80px;
+    }
+
+    .col-ip {
+        grid-column: 3;
+        padding: 0 4px;
+        font-weight: 500;
+        color: #e0e0e0;
+        text-align: left;
+        min-width: 100px;
+    }
+
+    .col-created,
+    .col-updated {
+        grid-column: 4;
+        padding: 0 4px;
+        font-weight: 500;
+        color: #e0e0e0;
+        text-align: left;
+        min-width: 120px;
+    }
+
+    .col-updated {
+        grid-column: 5;
+    }
+
+    .table-body {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .table-body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .table-body::-webkit-scrollbar-track {
+        background: rgba(26, 27, 38, 0.4);
+    }
+
+    .table-body::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+    }
+
+    .table-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .table-row {
+        display: grid;
+        grid-template-columns: 35px 2fr 2fr 2.5fr 2.5fr;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+    }
+
+    .table-row > div {
+        padding: 0 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .session-row {
+        display: grid;
+        grid-template-columns: 35px 2fr 2fr 2.5fr 2.5fr;
+        gap: 8px;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .session-row:last-child {
+        border-bottom: none;
+    }
+
+    .session-row:hover {
+        background: rgba(26, 27, 38, 0.8);
+    }
+
+    .session-row .col {
+        display: flex;
+        align-items: center;
+        color: var(--text);
+    }
+
+    .session-row .no {
+        opacity: 0.6;
+        font-size: 0.8rem;
+        justify-content: center;
+    }
+
+    .session-row .identity {
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .session-row .ip {
+        font-family: monospace;
+        opacity: 0.8;
+        font-size: 0.8rem;
+    }
+
+    .session-row .created,
+    .session-row .updated {
+        opacity: 0.7;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        min-width: 0;
+    }
+
+    .containers-wrapper {
+        display: flex;
+        gap: 1rem;
+        padding: 0 1rem;
+        flex-wrap: wrap;
+    }
+
+    .sessions-container,
+    .sessions-list-container {
+        background: rgba(19, 20, 31, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin: 1rem 0;
+        max-width: 550px;
+        max-height: 500px;
+        min-height: 150px;
+        overflow-y: auto;
+    }
+    .os-stats-container {
+        background: rgba(19, 20, 31, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin: 1rem 0;
+        max-width: 250px;
+        max-height: 500px;
+        min-height: 150px;
+        overflow-y: auto;
+    }
+
+    .os-stats-container {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .os-stats-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .os-stat-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        background: rgba(26, 27, 38, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .os-stat-item:hover {
+        border-color: var(--primary);
+        background: rgba(26, 27, 38, 0.6);
+    }
+
+    .os-icon {
+        width: 24px;
+        height: 24px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 0.75rem;
+    }
+
+    .os-info {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .os-name {
+        color: var(--text);
+        font-size: 0.875rem;
+        font-weight: 500;
+        min-width: 80px;
+    }
+
+    .os-count {
+        color: var(--primary);
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-align: right;
+        min-width: 40px;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .sessions-list-container .table-header {
+        display: grid;
+        grid-template-columns: 40px 1fr 1fr 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        background: rgba(19, 20, 31, 0.6);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-weight: 500;
+        color: var(--text);
+        font-size: 0.85rem;
+    }
+
+    .sessions-list-container .session-row {
+        display: grid;
+        grid-template-columns: 40px 1fr 1fr 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.2s ease;
+        font-size: 0.8rem;
+    }
+
+    .sessions-list-container .session-row .service-name {
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sessions-list-container .session-row .edge-router {
+        opacity: 0.8;
+        font-family: monospace;
+    }
+
+    .sessions-list-container .session-row .created-at {
+        opacity: 0.7;
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
+
+    .col-edge-routers {
+        grid-column: 5;
+        padding: 0 10px;
+        font-weight: 500;
+        color: #e0e0e0;
+    }
+</style>
+<div class="overlay"></div>
+<!--
+<div class="header">
+    <div class="title">
+        <span data-i18n="Dashboard"></span> 
+    </div>
+</div>
+-->
+<div id="DashHeader" class="grid dashboard">
+    <div class="grid numbers">
+        <div class="dial"></div>
+        <a href="./identities">
+            <div class="totalPod">
+                <div id="TotalIdentities" class="total"></div>
+                <div class="label" data-i18n="Identities"></div>
+            </div>
+        </a>
+        <a href="./routers" class="desktop">
+            <div class="totalPod">
+                <div id="TotalEdgeRouters" class="total"></div>
+                <div class="label" data-i18n="Routers"></div>
+            </div>
+        </a>
+        <a href="./services">
+            <div class="totalPod">
+                <div id="TotalServices" class="total"></div>
+                <div class="label" data-i18n="Services"></div>
+            </div>
+        </a>
+        <a href="./configs" class="desktop">
+            <div class="totalPod">
+                <div id="TotalConfigurations" class="total"></div>
+                <div class="label" data-i18n="Configurations"></div>
+            </div>
+        </a>
+
+        <a href="./sessions" class="desktop">
+            <div class="totalPod">
+                <div id="TotalSessions" class="total"></div>
+                <div class="label" data-i18n="Sessions"></div>
+            </div>
+        </a>
+        <a href="./service-policies" class="desktop">
+            <div class="totalPod">
+                <div id="TotalServicePolicies" class="total"></div>
+                <div class="label" data-i18n="ServicePolicies"></div>
+            </div>
+        </a>
+        <a id="NetVisualizer" href="./network-visualizer">
+            <div class="iconLink">
+                <div class="topology-icon"></div>
+                <div class="label" data-i18n="Network"></div>
+                <div class="label" data-i18n="Visualizer"></div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="containers-wrapper">
+
+    <div class="os-stats-container">
+        <div class="sessions-grid">
+            <h3>OS Distribution</h3>
+            <div class="os-stats-grid" id="osStatsGrid">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading OS statistics...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="MainMap" class="sessions-container">
+        <div class="sessions-grid">
+            <h3>Top 10 Active Identities' Sessions</h3>
+            <div class="sessions-filters">
+                <button class="refresh-button" onclick="page.refreshSessions()">
+                    <span class="refresh-icon"></span>
+                    <span data-i18n="Refresh"></span>
+                </button>
+                <div class="filter-group">
+                    <input type="text" id="SessionSearch" placeholder="Search sessions..." class="search-input">
+                </div>
+            </div>
+            <div class="sessions-table">
+                <div class="table-header">
+                    <div class="col-no">No.</div>
+                    <div class="col-identity">Identity</div>
+                    <div class="col-ip">IP Address</div>
+                    <div class="col-created">Created</div>
+                    <div class="col-updated">Updated</div>
+                </div>
+                <div class="table-body" id="sessionsList">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <span>Loading sessions...</span>
+                    </div>
+                </div>
+            </div>
+            <div id="SessionsError" class="error-state" style="display: none;">
+                <div class="error-icon">!</div>
+                <div class="error-message">Failed to load sessions. Please try again.</div>
+                <button class="retry-button" onclick="page.refreshSessions()">Retry</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="sessions-list-container">
+        <div class="sessions-grid">
+            <h3>Top 10 Active Routers' Services</h3>
+            <div class="sessions-filters">
+                <button class="refresh-button" onclick="page.refreshSessionsList()">
+                    <span class="refresh-icon"></span>
+                    <span data-i18n="Refresh"></span>
+                </button>
+                <div class="filter-group">
+                    <input type="text" id="SessionsListSearch" placeholder="Search sessions..." class="search-input">
+                </div>
+            </div>
+            <div class="sessions-table">
+                <div class="table-header">
+                    <div class="col no">No.</div>
+                    <div class="col service">Service</div>
+                    <div class="col router">Router</div>
+                    <div class="col created">Created</div>
+                </div>
+                <div id="SessionsListContent" class="table-body">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Loading sessions...</div>
+                    </div>
+                </div>
+            </div>
+            <div id="SessionsListError" class="error-state" style="display: none;">
+                <div class="error-icon">!</div>
+                <div class="error-message">Failed to load sessions. Please try again.</div>
+                <button class="retry-button" onclick="page.refreshSessionsList()">Retry</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+    <script language="javascript" type="text/javascript">
+        var tempGroup;
+        page = {
+            map: null,
+            roles: null,
+            services: null,
+            identities: null,
+            lastId: null,
+            binding: {
+                pageTitle: "Dashboard",
+                singular: "Dashboard"
+            },
+            data: [],
+            idsObject: null,
+            sessions: null,
+            sessionsList: null,
+            isLoading: false,
+            hasError: false,
+            isLoadingList: false,
+            hasErrorList: false,
+            osStats: {
+                windows: { count: 0, icon: 'windows-os.png' },
+                mac: { count: 0, icon: 'mac-os.png' },
+                linux: { count: 0, icon: 'linux-os.png' },
+                ios: { count: 0, icon: 'ios-os.png' },
+                android: { count: 0, icon: 'android-os.png' },
+                other: { count: 0, icon: 'other.png' }
+            },
+            init: function() {
+               // page.map = L.map("MainMap", {zoomControl: false});
+               // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; NetFoundry Inc.'}).addTo(page.map);
+               // page.map.setView(new L.LatLng(41.850033, -87.6500523), 4);
+
+                page.idsObject = new Data("identities");
+
+                page.services = new Selector("Services","services","services");
+                page.identities = new Selector("Identities","identities","identities");
+
+                page.services.isDropOver = true;
+                page.services.isSingleSelect = true;
+                page.services.isForceAt = true;
+                page.services.init();
+
+                page.identities.isDropOver = true;
+                page.identities.isSingleSelect = true;
+                page.identities.isForceAt = true;
+                page.identities.init();
+
+                page.roles = new Selector("Roles","roles");
+                page.roles.isForceHash = false;
+                page.roles.init();
+
+                page.sessions = new Data("api-sessions");
+                page.sessions.paging.searchOn = "id";
+                page.sessions.paging.sort = "id";
+                page.sessions.init(true, true);
+                page.sessionsList = new Data("sessions");
+                page.sessionsList.paging.searchOn = "id";
+                page.sessionsList.paging.sort = "id";
+                page.sessionsList.init(true, true);
+                context.addListener(page.sessionsList.name, page.sessionsListLoaded);
+                page.setupEventListeners();
+                page.loadSessions();
+                page.loadSessionsList();
+                page.loadOSStats();
+
+                page.events();
+
+                page.idsObject.init(true);
+                summary.get();
+                page.showVisualizer();
+            }, 
+            events: function() {
+                context.addListener(page.idsObject.name, page.idsLoaded);
+                context.addListener(summary.name, page.getLoaded);
+                context.addListener(page.sessions.name, page.sessionsLoaded);
+                context.addListener(page.sessionsList.name, page.sessionsListLoaded);
+            },
+            getLoaded: function(e) {
+                page.data = context.get(summary.name);
+                $("#TotalIdentities").html(page.data.identities);
+                $("#TotalServices").html(page.data['services.edge']);
+                $("#TotalConfigurations").html(page.data.configs);
+                $("#TotalEdgeRouters").html(page.data.routers);
+                $("#TotalServicePolicies").html(page.data.servicePolicies);
+                $("#TotalSessions").html(page.data.sessions);
+            },
+            idsLoaded: function(e) {
+                var markers = [];
+                for (var i=0; i<page.idsObject.data.length; i++) {
+                    if (page.idsObject.data[i].tags&&page.idsObject.data[i].tags.geolocation&&page.idsObject.data[i].tags.geolocation.split(',').length==2) {
+                        var items = page.idsObject.data[i].tags.geolocation.split(',');
+                        if (!isNaN(items[0])&&!isNaN(items[1])) {
+                            var marker = L.marker([items[0], items[1]]);
+                            marker.addTo(page.map).bindPopup(page.idsObject.data[i].name);
+                            markers.push(marker);
+                        }
+                    }
+                }
+                if (markers.length>0) {
+                    var group = new L.featureGroup(markers);
+                    tempGroup = group;
+                    console.log(group);
+                    page.map.fitBounds(group.getBounds());
+                }
+                setTimeout(function() {
+                    page.map.invalidateSize();
+                }, 1000);   
+                page.loadOSStats();
+            },
+            reset: function(e) {
+                $("#Host").val("localhost");
+                $("#Port").val("80");
+                $("#HowToPort").val("80");
+            },
+            showVisualizer: function(e) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const feature = urlParams.get('feature');
+                if (feature === 'visualizer') {
+                    $('#NetVisualizer').show();
+                    $('.grid.split.wide').addClass('exp');
+                    $('.grid.dashboard').addClass('exp');
+                    $('.grid.numbers').addClass('exp');
+                }
+            },
+            setupEventListeners: function() {
+                const searchInput = document.getElementById('SessionSearch');
+                const sessionsListSearch = document.getElementById('SessionsListSearch');
+
+                if (searchInput) {
+                    searchInput.addEventListener('input', page.filterSessions);
+                }
+                if (sessionsListSearch) {
+                    sessionsListSearch.addEventListener('input', page.filterSessionsList);
+                }
+            },
+            filterSessions: function() {
+                const searchInput = document.getElementById('SessionSearch');
+                
+                if (!searchInput) return;
+
+                const searchTerm = searchInput.value.toLowerCase();
+                const sessions = context.get(page.sessions.name) || [];
+                
+                const filteredSessions = sessions.filter(session => {
+                    if (!session || !session.id) return false;
+
+                    const identityName = session.identity && session.identity.name ? session.identity.name.toLowerCase() : '';
+                    const serviceName = session.service && session.service.name ? session.service.name.toLowerCase() : '';
+                    
+                    const matchesSearch = 
+                        session.id.toLowerCase().includes(searchTerm) ||
+                        identityName.includes(searchTerm) ||
+                        serviceName.includes(searchTerm);
+                    
+                    return matchesSearch;
+                });
+
+                page.renderSessions(filteredSessions);
+            },
+            loadSessions: function() {
+                page.isLoading = true;
+                page.hasError = false;
+                page.updateUIState();
+
+                try {
+                    page.sessions.init(true).then(() => {
+                        page.isLoading = false;
+                        page.updateUIState();
+                    }).catch((error) => {
+                        console.error('Error loading sessions:', error);
+                        page.isLoading = false;
+                        page.hasError = true;
+                        page.updateUIState();
+                    });
+                } catch (error) {
+                    console.error('Error initializing sessions:', error);
+                    page.isLoading = false;
+                    page.hasError = true;
+                    page.updateUIState();
+                }
+            },
+            updateUIState: function() {
+                const sessionsList = document.getElementById('sessionsList');
+                const sessionsError = document.getElementById('SessionsError');
+                const searchInput = document.getElementById('SessionSearch');
+
+                if (page.isLoading) {
+                    sessionsList.style.display = 'flex';
+                    sessionsError.style.display = 'none';
+                    if (searchInput) searchInput.disabled = true;
+                    return;
+                }
+
+                if (page.hasError) {
+                    sessionsList.style.display = 'none';
+                    sessionsError.style.display = 'flex';
+                    if (searchInput) searchInput.disabled = true;
+                    return;
+                }
+
+                sessionsList.style.display = 'grid';
+                sessionsError.style.display = 'none';
+                if (searchInput) searchInput.disabled = false;
+
+                const sessions = context.get(page.sessions.name);
+                page.renderSessions(sessions);
+            },
+            refreshSessions: function() {
+                page.loadSessions();
+            },
+            sessionsLoaded: function(e) {
+                try {
+                    const sessionsData = context.get(page.sessions.name);
+                    if (!sessionsData) {
+                        throw new Error('No session data available');
+                    }
+                    page.isLoading = false;
+                    page.hasError = false;
+                    page.updateUIState();
+                } catch (error) {
+                    console.error('Error in sessionsLoaded:', error);
+                    page.isLoading = false;
+                    page.hasError = true;
+                    page.updateUIState();
+                }
+            },
+            renderSessions: function(sessions) {
+                const sessionsList = document.getElementById('sessionsList');
+                sessionsList.innerHTML = '';
+
+                // 過濾掉 Identity 為 "Default Admin" 的記錄
+                const filteredSessions = sessions.filter(session => 
+                    session.identity?.name !== "Default Admin"
+                );
+
+                if (filteredSessions.length === 0) {
+                    sessionsList.innerHTML = '<div class="no-data">No active sessions found</div>';
+                    return;
+                }
+
+                // 新增格式化函數
+                const formatDate = (date) => {
+                    const pad = (n) => n < 10 ? '0' + n : n;
+                    return date.getFullYear() + '-' +
+                        pad(date.getMonth() + 1) + '-' +
+                        pad(date.getDate()) + ' ' +
+                        pad(date.getHours()) + ':' +
+                        pad(date.getMinutes()) + ':' +
+                        pad(date.getSeconds());
+                };
+
+                // 按更新時間排序並只取最新的10條記錄
+                const sortedSessions = [...filteredSessions].sort((a, b) => 
+                    new Date(b.updatedAt) - new Date(a.updatedAt)
+                );
+                const displaySessions = sortedSessions.slice(0, 10);
+
+                displaySessions.forEach((session, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'table-row';
+                    
+                    // Format dates in 24-hour format
+                    const createdDate = new Date(session.createdAt);
+                    const updatedDate = new Date(session.updatedAt);
+
+                    row.innerHTML = `
+                        <div class="col-no">${index + 1}</div>
+                        <div class="col-identity">${session.identity?.name || 'N/A'}</div>
+                        <div class="col-ip">${session.ipAddress || session.apiSession?.ip || 'N/A'}</div>
+                        <div class="col-created">${formatDate(createdDate)}</div>
+                        <div class="col-updated">${formatDate(updatedDate)}</div>
+                    `;
+                    
+                    sessionsList.appendChild(row);
+                });
+            },
+            sessionsListLoaded: function(e) {
+                try {
+                    const sessionsData = context.get(page.sessionsList.name);
+                    if (!sessionsData) {
+                        console.log('No session data available');
+                        return;
+                    }
+                    console.log('Sessions data loaded:', sessionsData);
+                    page.isLoadingList = false;
+                    page.hasErrorList = false;
+                    page.updateSessionsListUIState();
+                } catch (error) {
+                    console.error('Error in sessionsListLoaded:', error);
+                    page.isLoadingList = false;
+                    page.hasErrorList = true;
+                    page.updateSessionsListUIState();
+                }
+            },
+            loadSessionsList: function() {
+                page.isLoadingList = true;
+                page.hasErrorList = false;
+                page.updateSessionsListUIState();
+
+                try {
+                    // 確保先初始化數據
+                    if (!page.sessionsList.initialized) {
+                        page.sessionsList.init(true, true).then(() => {
+                            console.log('Sessions list initialized');
+                            page.isLoadingList = false;
+                            page.updateSessionsListUIState();
+                        }).catch((error) => {
+                            console.error('Error initializing sessions list:', error);
+                            page.isLoadingList = false;
+                            page.hasErrorList = true;
+                            page.updateSessionsListUIState();
+                        });
+                    } else {
+                        // 如果已經初始化，直接重新加載數據
+                        page.sessionsList.reload().then(() => {
+                            console.log('Sessions list reloaded');
+                            page.isLoadingList = false;
+                            page.updateSessionsListUIState();
+                        }).catch((error) => {
+                            console.error('Error reloading sessions list:', error);
+                            page.isLoadingList = false;
+                            page.hasErrorList = true;
+                            page.updateSessionsListUIState();
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error in loadSessionsList:', error);
+                    page.isLoadingList = false;
+                    page.hasErrorList = true;
+                    page.updateSessionsListUIState();
+                }
+            },
+            updateSessionsListUIState: function() {
+                const sessionsListContent = document.getElementById('SessionsListContent');
+                const sessionsListError = document.getElementById('SessionsListError');
+                const searchInput = document.getElementById('SessionsListSearch');
+
+                if (page.isLoadingList) {
+                    sessionsListContent.style.display = 'flex';
+                    sessionsListError.style.display = 'none';
+                    if (searchInput) searchInput.disabled = true;
+                    return;
+                }
+
+                if (page.hasErrorList) {
+                    sessionsListContent.style.display = 'none';
+                    sessionsListError.style.display = 'flex';
+                    if (searchInput) searchInput.disabled = true;
+                    return;
+                }
+
+                sessionsListContent.style.display = 'grid';
+                sessionsListError.style.display = 'none';
+                if (searchInput) searchInput.disabled = false;
+
+                const sessions = context.get(page.sessionsList.name);
+                page.renderSessionsList(sessions);
+            },
+            refreshSessionsList: function() {
+                page.loadSessionsList();
+            },
+            filterSessionsList: function() {
+                const searchInput = document.getElementById('SessionsListSearch');
+                
+                if (!searchInput) return;
+
+                const searchTerm = searchInput.value.toLowerCase();
+                const sessions = context.get(page.sessionsList.name) || [];
+                
+                const filteredSessions = sessions.filter(session => {
+                    if (!session || !session.id) return false;
+
+                    const serviceName = session.service && session.service.name ? session.service.name.toLowerCase() : '';
+                    
+                    const matchesSearch = 
+                        session.id.toLowerCase().includes(searchTerm) ||
+                        serviceName.includes(searchTerm);
+                    
+                    return matchesSearch;
+                });
+
+                page.renderSessionsList(filteredSessions);
+            },
+            renderSessionsList: function(sessions) {
+                const sessionsListContent = document.getElementById('SessionsListContent');
+                
+                if (!sessions || !Array.isArray(sessions) || sessions.length === 0) {
+                    console.log('No sessions to display');
+                    sessionsListContent.innerHTML = '<div class="no-sessions">No sessions found</div>';
+                    return;
+                }
+                
+                console.log('Rendering sessions:', sessions);
+                
+                // Sort sessions by created time, most recent first
+                const sortedSessions = [...sessions].sort((a, b) => {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                });
+
+                // Take only the first 10 sessions
+                const displaySessions = sortedSessions.slice(0, 10);
+                
+                sessionsListContent.innerHTML = '';
+                
+                // 新增格式化函數
+                const formatDate = (date) => {
+                    const pad = (n) => n < 10 ? '0' + n : n;
+                    return date.getFullYear() + '-' +
+                        pad(date.getMonth() + 1) + '-' +
+                        pad(date.getDate()) + ' ' +
+                        pad(date.getHours()) + ':' +
+                        pad(date.getMinutes()) + ':' +
+                        pad(date.getSeconds());
+                };
+                
+                displaySessions.forEach((session, index) => {
+                    if (!session || !session.id) return;
+
+                    const sessionRow = document.createElement('div');
+                    sessionRow.className = 'session-row';
+                    
+                    const serviceName = session.service && session.service.name ? session.service.name : 'Unknown';
+                    
+                    // 修改 Edge Router 名稱的獲取邏輯
+                    let edgeRouterName = 'N/A';
+                    if (session.edgeRouters && Array.isArray(session.edgeRouters)) {
+                        edgeRouterName = session.edgeRouters
+                            .map(router => {
+                                if (typeof router === 'string') return router;
+                                if (typeof router === 'object') {
+                                    return router.name || router.id || 'N/A';
+                                }
+                                return 'N/A';
+                            })
+                            .filter(name => name !== 'N/A')
+                            .join(', ');
+                        
+                        if (!edgeRouterName) edgeRouterName = 'N/A';
+                    }
+                    
+                    const createdAt = session.createdAt ? formatDate(new Date(session.createdAt)) : 'N/A';
+                    
+                    sessionRow.innerHTML = `
+                        <div class="col no">${index + 1}</div>
+                        <div class="col service-name" title="${serviceName}">${serviceName}</div>
+                        <div class="col edge-router" title="${edgeRouterName}">${edgeRouterName}</div>
+                        <div class="col created-at">${createdAt}</div>
+                    `;
+                    
+                    sessionsListContent.appendChild(sessionRow);
+                });
+            },
+            loadOSStats: function() {
+                const identities = context.get(page.idsObject.name) || [];
+                const total = identities.length;
+                
+                // Reset counts
+                Object.keys(page.osStats).forEach(os => {
+                    page.osStats[os].count = 0;
+                });
+
+                // Count OS types
+                identities.forEach(identity => {
+                    if (identity.envInfo) {
+                        let os = "other";
+                        if (identity.envInfo.osVersion && identity.envInfo.osVersion.toLowerCase().indexOf("windows") >= 0) {
+                            os = "windows";
+                        } else if (identity.envInfo.os) {
+                            const osLower = identity.envInfo.os.toLowerCase();
+                            if (osLower.indexOf("darwin") >= 0) {
+                                os = "mac";
+                            } else if (osLower.indexOf("linux") >= 0) {
+                                os = "linux";
+                            } else if (osLower.indexOf("android") >= 0) {
+                                os = "android";
+                            } else if (osLower.indexOf("windows") >= 0) {
+                                os = "windows";
+                            }
+                        }
+                        page.osStats[os].count++;
+                    } else {
+                        page.osStats.other.count++;
+                    }
+                });
+
+                // Render OS stats
+                const osStatsGrid = document.getElementById('osStatsGrid');
+                if (!osStatsGrid) return;
+                
+                osStatsGrid.innerHTML = '';
+
+                // 定義固定的作業系統順序，移除 other
+                const osOrder = ['windows', 'mac', 'linux', 'ios', 'android'];
+                
+                osOrder.forEach(os => {
+                    const data = page.osStats[os];
+                    const statItem = document.createElement('div');
+                    statItem.className = 'os-stat-item';
+                    statItem.innerHTML = `
+                        <div class="os-icon" style="background-image: url('/assets/images/${data.icon}')"></div>
+                        <div class="os-info">
+                            <div class="os-name">${os === 'mac' ? 'MacOS' : os === 'ios' ? 'iOS' : os.charAt(0).toUpperCase() + os.slice(1)}</div>
+                            <div class="os-count">${data.count}</div>
+                        </div>
+                    `;
+                    osStatsGrid.appendChild(statItem);
+                });
+            }
+        }
+    </script>

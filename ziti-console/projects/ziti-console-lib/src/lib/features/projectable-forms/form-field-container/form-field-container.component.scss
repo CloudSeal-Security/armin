@@ -1,0 +1,118 @@
+:host {
+    height: fit-content;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    position: relative;
+}
+
+.form-field-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--navigation);
+    padding: 0.9375rem 0.9375rem;
+    border-radius: 0.625rem;
+    gap: var(--marginMedium);
+    height: 100%;
+    position: relative;
+    border: var(--formFieldBorder);
+
+    &.bold-header-title {
+        .form-field-title {
+            color: var(--primary);
+            font-weight: 100;
+            font-size: 1.125rem;
+            font-family: 'Russo One';
+            filter: brightness(0.9);
+        }
+    }
+    &.hide-overflow {
+        .form-field-content {
+            overflow: hidden;
+        }
+    }
+
+    &.no-gap {
+        .form-field-content {
+            gap: 0;
+        }
+    }
+
+    .form-field-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.9375rem;
+        z-index: 99999;
+        position: relative;
+        border-radius: var(--inputBorderRadius);
+    }
+    &.form-field-row {
+        .form-field-content {
+            flex-direction: row;
+            width: 100%;
+        }
+    }
+    .form-field-title-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        flex: 1 1 auto;
+        width: 100%;
+    }
+    .form-field-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 0.875rem;
+        z-index: 9999;
+    }
+
+    .title-icon {
+        font-size: 1.25rem;
+        margin-right: 0.3125rem;
+        margin-left: 0.3125rem;
+    }
+
+    .form-field-title {
+        display: flex;
+        align-items: center;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--tableText);
+        text-transform: uppercase;
+        height: 0.875rem;
+    }
+
+    .form-field-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--placeholder);
+    }
+
+    .form-field-count {
+        background-color: #4c5566;
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        border-radius: 0.875rem;
+        height: 1.5rem;
+        padding-left: 0.8125rem;
+        padding-right: 0.8125rem;
+        font-size: 0.8125rem;
+    }
+
+    .form-field-input {
+        &::placeholder {
+            font-weight: 600;
+        }
+    }
+
+    .save-button {
+        text-wrap: nowrap;
+        height: 1.5625rem;
+    }
+}

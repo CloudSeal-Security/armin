@@ -1,0 +1,85 @@
+.header-filter-container {
+  .search {
+    height: 2.5rem;
+    border-width: 0;
+    font-size: 0.875rem;
+    box-shadow: none;
+    padding-left: 0rem;
+    margin-top: 0.9375rem;
+  }
+}
+
+#TimeSearch {
+  position: relative;
+  float: left;
+  display: inline-block;
+  margin-left: 0.625rem;
+  width: 3.125rem;
+  height: 2.5rem;
+  background-color: var(--primary);
+}
+
+#TimeSearch #TimeSearchList {
+  width: 2.75rem;
+  height: 0rem;
+  position: absolute;
+  top: 0rem;
+  left: -0.125rem;
+  overflow: hidden;
+  transition: var(--transition);
+  background-color: var(--menu);
+  border-radius: 0.5rem;
+  z-index: 30;
+}
+
+#TimeSearch #TimeSearchList .time {
+  width: 2.5rem;
+  background-color: var(--background);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 0.5rem;
+  line-height: 1.625rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 0.125rem;
+  margin-left: 0.125rem;
+  left: -0.125rem;
+  top: -3.1875rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#TimeSearch #TimeSearchList.open {
+  top: -3.1875rem;
+  width: 2.75rem;
+  height: 14.125rem;
+}
+
+#TimeSearch #TimeSelectButton {
+  width: 2.5rem;
+  background-color: var(--background);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 0.5rem;
+  line-height: 1.625rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-top: 0.4375rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#TimeSearch #TimeSelectButton:hover,
+#TimeSearch #TimeSearchList .time:hover {
+  background-color: var(--primaryColor);
+  color: var(--white);
+}
+
+::ng-deep .tag-selector-filter .select2-selection {
+  border: none !important;
+  .select2-search__field {
+    height: 2.1875rem !important;
+  }
+}

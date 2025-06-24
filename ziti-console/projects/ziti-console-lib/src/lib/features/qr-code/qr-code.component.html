@@ -1,0 +1,52 @@
+<div class="qr-code-container" [ngClass]="{'modal-view': isModal}">
+    <div *ngIf="!qrOnly" class="qr-code-buttons">
+        <span class="info-text" *ngIf="hasJWT && !jwtExpired && type !== 'router'">TO REGISTER THIS IDENTITY</span>
+        <span class="info-text" *ngIf="hasJWT && !jwtExpired && type === 'router'">TO REGISTER THIS ROUTER</span>
+        <div (click)="identitiesSvc.downloadJWT(jwt, identity.name)" *ngIf="hasJWT && !jwtExpired && type !== 'router'" class="download-button">
+            <div class="download-key"></div>
+            <div>DOWNLOAD ENROLLMENT JWT</div>
+            <div class="tap-to-download"></div>
+        </div>
+        <div (click)="identitiesSvc.copyToken(token)" *ngIf="!jwtExpired && type === 'router'" class="download-button" style="background-color: #232f3e!important;">
+            <div class="download-key"></div>
+            <div>COPY ENROLLMENT TOKEN</div>
+            <div class="tap-to-download"></div>
+        </div>
+        <div (click)="identitiesSvc.resetJWT(identity)" *ngIf="showResetToken" class="download-button" >
+            <div class="download-key"></div>
+            <div>RESET ENROLLMENT</div>
+            <div class="tap-to-download"></div>
+        </div>
+        <div (click)="reissue()" *ngIf="showReissueToken" class="download-button" >
+            <div class="download-key"></div>
+            <div>REISSUE ENROLLMENT</div>
+            <div class="tap-to-download"></div>
+        </div>
+        <div (click)="resetMFA()" *ngIf="showResetMFA || mfaReset" class="download-button" [ngClass]="{'reset-success': mfaReset}">
+            <div class="icon-lock"></div>
+            <div>{{mfaReset ? 'MFA RESET SUCCESSFUL' : 'RESET MFA'}}</div>
+            <div [ngClass]="{spinner: resettingMFA, 'tap-to-download': !resettingMFA, 'icon-Icon_Check': mfaReset && !resettingMFA}"></div>
+        </div>
+        <span class="info-text" *ngIf="hasJWT && !jwtExpired && type !== 'router'">OR SCAN QR CODE</span>
+    </div>
+    <qrcode
+            *ngIf="!jwtExpired && type !== 'router'"
+            [errorCorrectionLevel]="'M'" [qrdata]="jwt"
+            [width]="qrCodeSize" (click)="expandQRCode()"
+            [ngClass]="{'qr-code-expandable': canExpand}"
+    ></qrcode>
+    <div *ngIf="!qrOnly" class="qr-code-buttons">
+        <span class="info-text" *ngIf="!jwtExpired && type === 'router'">OR</span>
+        <div (click)="identitiesSvc.downloadJWT(jwt, identity.name)" *ngIf="!jwtExpired && type === 'router'" class="download-button">
+            <div class="download-key"></div>
+            <div>DOWNLOAD ENROLLMENT JWT</div>
+            <div class="tap-to-download"></div>
+        </div>
+        <span class="info-text" *ngIf="!showResetToken">{{jwtExpired ? 'REGISTRATION EXPIRED' : 'EXPIRES'}} {{expirationDate}}</span>
+        <div (click)="reenroll()" *ngIf="showReenrollToken" class="download-button" >
+            <div class="download-key"></div>
+            <div>REISSUE ENROLLMENT</div>
+            <div class="tap-to-download"></div>
+        </div>
+    </div>
+</div>

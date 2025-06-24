@@ -1,0 +1,71 @@
+.selector-input-container {
+  margin: var(--marginSmall) 0;
+
+  label {
+    margin-bottom: 0rem;
+    margin-top: 0rem;
+    width: fit-content;
+    color: white;
+  }
+
+  .input-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin: 1rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  select {
+    background: transparent;
+    border: none;
+    color: #ffffff !important;
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    &:focus {
+      outline: none;
+      color: #ffffff !important;
+    }
+
+    &.error {
+      border-color: red;
+    }
+
+    option {
+      background-color: var(--background);
+      color: white;
+    }
+  }
+
+  div.error {
+    color: red;
+  }
+}
+
+.label-container {
+  display: flex;
+  gap: 0.3125rem;
+  margin-bottom: 0.3125rem;
+  margin-top: 0.625rem;
+}

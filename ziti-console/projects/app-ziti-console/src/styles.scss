@@ -1,0 +1,159 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+@import './assets/styles/tables.scss';
+@import 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+
+:root {
+  --navigation: #1a1b26;
+  --navigationTransparent0: rgba(26, 27, 38, 0);
+  --navigationTransparent1: rgba(26, 27, 38, 1);
+  --primary: #e28015;
+  --primaryColor: #e28015;
+  --primaryColorShadowLight: rgba(0, 242, 254, 0.15);
+  --secondary: #03499d;
+  --secondaryColor:#03499d;
+  --transition: 0.3s;
+  --highlighted: #00f2fe;
+  --menu: #1a1b26;
+  --inputBorder: #2d2e3a;
+  --icon: #a0a1b0;
+  --stroke: #2d2e3a;
+  --shaded: #1e1f2b;
+  --background: #13141f;
+  --placeholder: #8587a0;
+  --text: #e2e3e9;
+  --subText: #a0a1b0;
+  --shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+  --shadowLarge: 0 0.75rem 1.4375rem rgba(0, 0, 0, 0.2);
+  --shadowColor: rgba(0, 0, 0, 0.2);
+  --greenShadow: rgba(0, 255, 157, 0.3);
+  --redShadow: rgba(255, 61, 90, 0.3);
+  --boxShadow: rgba(0, 0, 0, 0.2);
+  --redText: #ff3d5a;
+  overflow: hidden;
+}
+
+.ziti-page-container .filters {
+  position: relative !important;
+  width: 100% !important;
+  height: 3.75rem !important;
+  background-color: var(--menu) !important;
+  border: 1px solid var(--stroke) !important;
+  border-radius: 3.125rem !important;
+  padding: 0.625rem !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.ziti-page-container {
+  height: 100%;
+  width: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding-top: 0.875rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  top: 0rem;
+
+  .searchButton {
+    display: none;
+  }
+
+  lib-data-table {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex: 1 0 auto;
+  }
+}
+
+.modal.open {
+  .close.icon-close {
+    display: block;
+  }
+}
+
+.modal {
+  .close.icon-close {
+    display: none;
+  }
+}
+
+.action-button {
+  text-align: center;
+  color: var(--white);
+  line-height: 3.75rem;
+  font-size: 1.875rem;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 2.5rem;
+  position: absolute;
+  right: 2.1875rem;
+  top: 1.5625rem;
+  background-color: var(--primary);
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 24;
+  box-shadow: 0 0 1rem rgba(0, 242, 254, 0.2);
+  transition: var(--transition);
+
+  &:hover {
+    background-color: var(--primaryColor);
+    box-shadow: 0 0 1.5rem rgba(0, 242, 254, 0.3);
+  }
+
+  &.remove {
+    text-align: center;
+    color: var(--white);
+    line-height: 3.75rem;
+    font-size: 1.875rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 2.5rem;
+    position: absolute;
+    right: 2.1875rem;
+    top: 1.5625rem;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 24;
+    box-shadow: 0 0 1rem rgba(255, 61, 90, 0.2);
+    transition: var(--transition);
+    background-color: var(--redText);
+    margin-top: 0rem;
+    opacity: 1;
+
+    &:hover {
+      box-shadow: 0 0 1.5rem rgba(255, 61, 90, 0.3);
+    }
+  }
+}
+
+app-zac-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.main {
+  .page {
+    .zac-wrapper-container {
+      width: calc(100% + 3rem);
+      height: calc(100% + 3rem);
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      top: -1.5rem;
+      left: -1.5rem;
+      flex: 1 0 auto;
+      padding: 1.5rem;
+    }
+  }
+}
+
+html {
+  overflow-x: hidden;
+}
