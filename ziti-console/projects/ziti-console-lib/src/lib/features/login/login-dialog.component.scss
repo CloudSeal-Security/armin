@@ -1,0 +1,115 @@
+.login-modal-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  border-radius: 1.5625rem;
+  width: 25rem;
+  padding: var(--paddingXXL);
+
+  .login-modal-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .login-modal-content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .login-modal-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .login-modal-icon {
+      width: 7.5rem;
+      height: 7.5rem;
+      background-size: contain;
+      z-index: 20;
+      box-sizing: var(--shadow);
+      margin-left: 0.9375rem;
+    }
+    lib-string-input,
+    lib-password-input {
+      width: 100%;
+    }
+  }
+  .login-title-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .login-title {
+      color: var(--primaryColor);
+      font-size: 1.875rem;
+      position: relative;
+      padding-left: 0;
+      width: 100%;
+      background: none;
+      text-transform: none;
+      height: auto;
+      font-family: Russo One;
+      filter: brightness(50%);
+    }
+  }
+
+  .login-buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    margin-top: var(--marginXXL);
+    .linkButton {
+      position: absolute;
+      left: 1.5625rem;
+      color: var(--subText);
+      font-weight: 600;
+    }
+  }
+
+  button {
+    background: linear-gradient(45deg, #045ecb, #1E90FF);
+    color: white;
+    border: none;
+    padding: 7px 29px;
+    border-radius: 15px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(2, 115, 251, 0.3);
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(2, 115, 251, 0.4);
+      background: linear-gradient(45deg, #1E90FF, #045ecb);
+    }
+
+    &:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    &.confirm {
+      background: linear-gradient(45deg, #045ecb, #1E90FF);
+    }
+    &.cancel {
+      background: linear-gradient(45deg, #045ecb, #1E90FF);
+    }
+  }
+}
+
+.login-error-message {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: .325rem;
+  color: var(--red);
+  font-weight: 600;
+  font-size: .925rem;
+}

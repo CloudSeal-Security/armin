@@ -1,0 +1,199 @@
+    <style>
+:host {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-image: url('./assets/images/login_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+.loginForm {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 400px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.logo-container {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.logo-container img {
+    width: 128px;
+    height: 128px;
+}
+
+.title {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 1rem 0;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin: 1rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.input-group:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.input-group img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    opacity: 0.8;
+}
+
+.input-group input {
+    background: transparent;
+    border: none;
+    color: #ffffff !important;
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.input-group input:focus {
+    outline: none;
+    color: #ffffff !important;
+}
+
+.input-group input:-webkit-autofill,
+.input-group input:-webkit-autofill:hover,
+.input-group input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.button {
+    background: linear-gradient(45deg, #045ecb, #1E90FF);
+    color: white;
+    border: none;
+    padding: 12px 48px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(2, 115, 251, 0.3);
+    min-width: 200px;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(2, 115, 251, 0.4);
+    background: linear-gradient(45deg, #1E90FF, #045ecb);
+}
+
+.button:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.login-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+    </style>
+
+
+<div class="login-container">
+    <div class="loginForm standard-form-fields" (keyup.enter)="next()">
+        <div class="logo-container">
+            <img src="./assets/images/Z-Gate_Logo.png" width="512" height="512"alt="Z-Gate Logo">
+        </div>
+        <div class="title">Z-Gate Admin Console</div>
+        <div class="input-group">
+            <img src="./assets/images/username.png" width="ˇ64" height="64" alt="Username">
+            <input
+                id="Username"
+                name="username"
+                type="text"
+                autocomplete="on"
+                required
+                [ngClass]="{'login-disabled': showNoControllers}"
+                [placeholder]="'enter username'"
+                (change)="usernameChange($event)"
+                (keyup)="usernameChange($event)"
+            >
+        </div>
+        <div class="input-group">
+            <img src="./assets/images/password.png" width="64" height="64" alt="Password">
+            <input
+                id="Password"
+                name="password"
+                type="password"
+                autocomplete="on"
+                required
+                [ngClass]="{'login-disabled': showNoControllers}"
+                [placeholder]="'enter password'"
+                (change)="passwordChange($event)"
+                (keyup)="passwordChange($event)"
+            >
+        </div>
+        <div class="buttons">
+            <button class="button" (click)="login()" [ngClass]="{'login-disabled': showNoControllers}">Login</button>
+        </div>
+    </div>
+</div>

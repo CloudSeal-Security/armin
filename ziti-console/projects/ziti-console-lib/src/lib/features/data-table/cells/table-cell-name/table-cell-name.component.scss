@@ -1,0 +1,28 @@
+.cell-name-renderer {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3125rem;
+}
+
+.cell-name-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.cell-status-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.circle {
+  &.online {
+    background-color: var(--green);
+  }
+  &.unknown {
+    background-color: var(--highlighted);
+  }
+}

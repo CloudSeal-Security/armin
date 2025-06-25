@@ -1,0 +1,34 @@
+:host {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  position: relative;
+}
+
+#jsoneditor {
+  height: 100%;
+  min-height: 12.5rem;
+  border: var(--jsonEditorBorder);
+  border-radius: var(--inputBorderRadius);
+  overflow: hidden;
+
+  &.read-only {
+    .jse-menu {
+      display: none;
+    }
+  }
+}
+
+.copy {
+  &.icon-copy {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    background: transparent;
+  }
+}
+
+::ng-deep #jsoneditor .jse-json-node.svelte-1wlxti1 .jse-insert-area.svelte-1wlxti1.svelte-1wlxti1.svelte-1wlxti1 {
+  display: none;
+}

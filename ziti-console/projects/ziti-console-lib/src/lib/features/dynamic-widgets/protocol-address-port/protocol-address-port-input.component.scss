@@ -1,0 +1,23 @@
+
+.grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 0.625rem;
+}
+
+.grid.addressFull {
+    grid-template-columns: 4.6875rem auto 4.6875rem;
+
+    .disabled {
+        opacity: .5;
+        pointer-events: none;
+    }
+}
+
+.grid.address-only {
+    grid-template-columns: auto;
+}
+
+.host-name-port {
+    grid-template-columns: auto 4.6875rem;
+}

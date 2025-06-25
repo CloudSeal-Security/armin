@@ -1,0 +1,90 @@
+.qr-code-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .info-text {
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .download-button {
+    margin: 0.625rem 0rem;
+  }
+
+  .reset-success {
+    opacity: .8;
+    background-color: var(--formSubGroup);
+    cursor: default;
+    pointer-events: none;
+
+    &:active {
+      transform: none;
+    }
+    &:hover {
+      filter: brightness(100%);
+    }
+  }
+
+  .icon-Icon_Check {
+    font-family: 'icomoon' !important;
+    font-size: 2rem;
+    margin-right: 1rem;
+
+    &:before {
+      content: "\e912";
+      color: var(--green);
+    }
+  }
+  .icon-lock {
+    margin-left: 0.725rem;
+    margin-right: 0.525rem;
+    text-align: center;
+    cursor: pointer;
+    height: 2.8125rem;
+    width: 2.8125rem;
+    z-index: 10;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spinner {
+    display: inline-block;
+    width: var(--spinnerSizeLarge);
+    height: var(--spinnerSizeLarge);
+    border-radius: 50%;
+    background: transparent;
+    border-top: var(--spinnerBorderTopLarge);
+    border-right: var(--spinnerBorderRightLarge);
+    border-bottom: var(--spinnerBorderBottomLarge);
+    border-left: var(--spinnerBorderLeftLarge);
+    animation: loading .5s infinite linear;
+    margin-left: var(--marginSmall);
+    margin-right: 1rem;
+    position: relative;
+  }
+
+  &.modal-view {
+    width: 31.25rem;
+    background-color: var(--background);
+    padding: 1.25rem;
+    border-radius: 0.9375rem;
+  }
+  .qr-code-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .qr-code-expandable {
+    cursor: pointer;
+    transition: transform .25s;
+    &:hover {
+      transform: scale(1.15);
+    }
+  }
+}

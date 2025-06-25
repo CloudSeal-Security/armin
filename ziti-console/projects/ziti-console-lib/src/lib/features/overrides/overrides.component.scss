@@ -1,0 +1,74 @@
+.overrides-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0.625rem;
+
+  .overrides-container {
+    max-width: 64rem;
+    flex: 1 1 auto;
+
+    .form-title-container {
+      margin-left: -0.625rem;
+    }
+
+    .title {
+      display: flex;
+      margin-left: 0.3125rem;
+    }
+
+    .button {
+      &.confirm {
+        &.disabled {
+          pointer-events: none;
+          filter: grayscale(1);
+          opacity: .5;
+        }
+        &:hover {
+          outline: 0;
+          filter: brightness(90%);
+          background-color: var(--primaryColor);
+          box-shadow: 0 0.125rem 0.1875rem 0 var(--primaryColorOpaque);
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .override-list-container {
+  .p-element.p-icon-wrapper path {
+    stroke: var(--formSubGroup) !important;
+    fill: var(--formSubGroup) !important;
+  }
+  .p-dropdown {
+    font-weight: 400;
+    font-family: 'Open Sans', Arial, sans-serif;
+    height: 3.125rem;
+    width: 100%;
+    border-color: var(--stroke);
+    border-style: solid;
+    border-width: var(--inputBorderWidth);
+    border-radius: var(--inputBorderRadius);
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 0.9375rem;
+    background-color: var(--navigation) !important;
+    color: var(--text);
+    -webkit-appearance: none;
+  }
+  .p-inputtext {
+    border-radius: var(--inputBorderRadius);
+    border-color: transparent !important;
+    height: 2.875rem;
+    &:hover {
+      border-color: transparent !important;
+    }
+    &:active {
+      border-color: transparent !important;
+    }
+  }
+  .p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: none;
+  }
+}

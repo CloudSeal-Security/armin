@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tar:*)",
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(chmod:*)",
+      "Bash(./create_console_patch_with_auth_removal.sh:*)",
+      "Bash(find:*)",
+      "Bash(npm run build:*)",
+      "Bash(grep:*)",
+      "Bash(mv:*)",
+      "Bash(ls:*)",
+      "Bash(rg:*)",
+      "Bash(npm install)",
+      "Bash(cp:*)",
+      "Bash(sed:*)",
+      "Bash(test:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run:*)",
+      "Bash(git checkout:*)"
+    ],
+    "deny": []
+  }
+}
