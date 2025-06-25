@@ -1,5 +1,6 @@
-# Ignore large console patch files
-zgate_offline/console/console_patch.tar
+# Ignore all files in zgate_offline/console/ except the specific .deb file
+zgate_offline/console/*
+!zgate_offline/console/openziti-console_3.12.4_amd64.deb
 
 # Node modules
 node_modules/

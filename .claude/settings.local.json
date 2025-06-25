@@ -18,7 +18,8 @@
       "Bash(test:*)",
       "Bash(npm run lint)",
       "Bash(npm run:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(ng build:*)"
     ],
     "deny": []
   }
