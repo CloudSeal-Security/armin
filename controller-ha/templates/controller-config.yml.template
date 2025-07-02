@@ -1,0 +1,122 @@
+# OpenZiti Controller HA 配置模板
+# 請根據實際環境修改以下變數：
+# {{CONTROLLER_ID}} - 控制器識別碼 (controller1, controller2, controller3)
+# {{CONTROLLER_FQDN}} - 控制器完整網域名稱
+# {{TRUST_DOMAIN}} - 信任域名稱
+
+# 版本
+v: 3
+
+# 信任域配置（SPIFFE 必需）
+trustDomain: {{TRUST_DOMAIN}}
+
+# 控制器識別
+identity:
+  cert: /var/lib/ziti-controller/pki/intermediate/certs/{{CONTROLLER_ID}}.chain.pem
+  server_cert: /var/lib/ziti-controller/pki/intermediate/certs/{{CONTROLLER_ID}}.chain.pem
+  key: /var/lib/ziti-controller/pki/intermediate/keys/{{CONTROLLER_ID}}.key
+  ca: /var/lib/ziti-controller/pki/ca/certs/ca.cert
+
+# 控制平面配置
+ctrl:
+  listener: tls:0.0.0.0:6262
+  options:
+    advertiseAddress: tls:{{CONTROLLER_FQDN}}:6262
+
+# 管理 API 配置
+mgmt:
+  listener: tls:0.0.0.0:10000
+  options:
+    advertiseAddress: tls:{{CONTROLLER_FQDN}}:10000
+
+# RAFT 配置
+raft:
+  # 資料目錄
+  dataDir: /var/lib/ziti-controller/raft
+  
+  # 最小叢集大小
+  minClusterSize: 3
+  
+  # 選舉超時（毫秒）
+  electionTimeout: 1000
+  
+  # 心跳超時（毫秒）
+  heartbeatTimeout: 500
+  
+  # 快照間隔
+  snapshotInterval: 8192
+  
+  # 快照保留數量
+  snapshotThreshold: 5
+
+# 資料庫配置
+db: /var/lib/ziti-controller/ctrl.db
+
+# 命令速率限制
+commandRateLimiter:
+  enabled: true
+  maxQueued: 100
+
+# Web 管理介面配置
+web:
+  - name: all-apis-localhost
+    bindPoints:
+      - interface: 0.0.0.0:8441
+        address: {{CONTROLLER_FQDN}}:8441
+        newAddress: 0.0.0.0:8441
+    identity:
+      cert: /var/lib/ziti-controller/pki/intermediate/certs/{{CONTROLLER_ID}}.chain.pem
+      server_cert: /var/lib/ziti-controller/pki/intermediate/certs/{{CONTROLLER_ID}}.chain.pem
+      key: /var/lib/ziti-controller/pki/intermediate/keys/{{CONTROLLER_ID}}.key
+      ca: /var/lib/ziti-controller/pki/ca/certs/ca.cert
+    options:
+      idleTimeout: 5000ms
+      readTimeout: 5000ms
+      writeTimeout: 100000ms
+      minTLSVersion: TLS1.2
+      maxTLSVersion: TLS1.3
+    apis:
+      - binding: fabric
+      - binding: edge-management
+        options:
+          corsAllowedOrigins:
+            - https://{{CONTROLLER_FQDN}}:8441
+            - https://controller1.example.com:8441
+            - https://controller2.example.com:8441
+            - https://controller3.example.com:8441
+      - binding: edge-client
+        options:
+          corsAllowedOrigins:
+            - https://{{CONTROLLER_FQDN}}:8441
+
+# Edge 配置
+edge:
+  # API 會話超時
+  api:
+    sessionTimeout: 30m
+    address: {{CONTROLLER_FQDN}}:8441
+  
+  # 註冊配置
+  enrollment:
+    signingCert:
+      cert: /var/lib/ziti-controller/pki/intermediate/certs/intermediate.cert
+      key: /var/lib/ziti-controller/pki/intermediate/keys/intermediate.key
+
+# 日誌配置
+trace:
+  path: /var/log/ziti-controller/{{CONTROLLER_ID}}.trace
+
+# 事件配置
+events:
+  jsonLogger:
+    subscriptions:
+      - type: "fabric.circuits"
+      - type: "fabric.links"
+      - type: "fabric.routers"
+      - type: "fabric.terminators"
+      - type: "edge.sessions"
+      - type: "edge.apiSessions"
+    handler:
+      type: file
+      format: json
+      path: /var/log/ziti-controller/{{CONTROLLER_ID}}.events.json

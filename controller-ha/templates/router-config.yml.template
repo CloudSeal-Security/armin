@@ -1,0 +1,98 @@
+# OpenZiti Router HA 配置模板
+# 支援多控制器連線
+# 請根據實際環境修改以下變數：
+# {{ROUTER_ID}} - Router 識別碼
+# {{ROUTER_FQDN}} - Router 完整網域名稱
+
+# 版本
+v: 3
+
+# 身份識別配置
+identity:
+  cert: /var/lib/ziti-router/pki/{{ROUTER_ID}}.cert
+  server_cert: /var/lib/ziti-router/pki/{{ROUTER_ID}}.cert
+  key: /var/lib/ziti-router/pki/{{ROUTER_ID}}.key
+  ca: /var/lib/ziti-router/pki/ca.cert
+
+# 控制器連線配置（支援多控制器 HA）
+ctrl:
+  # 多控制器端點列表
+  endpoints:
+    - tls:controller1.example.com:8440
+    - tls:controller2.example.com:8440
+    - tls:controller3.example.com:8440
+  
+  # 連線選項
+  options:
+    # 連線超時
+    connectTimeout: 5s
+    
+    # 健康檢查間隔
+    heartbeatInterval: 60s
+    
+    # 重連間隔
+    reconnectInterval: 30s
+    
+    # 最大重連次數
+    maxRetries: 3
+
+# Edge 連接埠配置
+listeners:
+  # Edge 客戶端連接埠
+  - binding: edge
+    address: tls:0.0.0.0:3022
+    options:
+      advertise: {{ROUTER_FQDN}}:3022
+      connectTimeoutMs: 1000
+      getSessionTimeout: 60s
+
+# Router 間連接埠（用於 fabric）
+link:
+  dialers:
+    - binding: transport
+  listeners:
+    - binding: transport
+      bind: tls:0.0.0.0:10080
+      advertise: tls:{{ROUTER_FQDN}}:10080
+
+# 傳輸配置
+transport:
+  ws:
+    writeTimeout: 15s
+    readTimeout: 15s
+    idleTimeout: 120s
+    pongTimeout: 60s
+    pingInterval: 54s
+    handshakeTimeout: 10s
+    readBufferSize: 4096
+    writeBufferSize: 4096
+    enableCompression: true
+
+# 日誌配置
+trace:
+  path: /var/log/ziti-router/{{ROUTER_ID}}.trace
+
+# 健康檢查配置
+healthChecks:
+  ctrlPingCheck:
+    # 控制器健康檢查間隔
+    interval: 30s
+    timeout: 15s
+    initialDelay: 15s
+
+# 負載均衡配置
+forwarder:
+  # 控制器選擇策略
+  latencyProbeInterval: 10s
+  xgressDialQueueLength: 1000
+  xgressDialWorkerCount: 128
+  linkDialQueueLength: 1000
+  linkDialWorkerCount: 32
+
+# 效能調優
+options:
+  # 最大連線數
+  maxConnections: 1000
+  
+  # 緩衝區大小
+  bufferSize: 4096
