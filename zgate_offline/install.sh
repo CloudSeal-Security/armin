@@ -44,6 +44,14 @@ install_suite() {
         return 1
     fi
 
+    echo "執行 CA 憑證替換程序..."
+    if bash ./pki_change/caReplace.sh; then
+        echo "✓ CA 憑證替換成功"
+    else
+        echo "✗ CA 憑證替換失敗!"
+        return 1
+    fi
+
     # 安裝Console
     check_deb_file "./console/openziti-console_3.12.4_amd64.deb" || return 1
     if sudo dpkg -i ./console/openziti-console_3.12.4_amd64.deb; then
@@ -58,6 +66,9 @@ install_suite() {
     sudo /opt/openziti/etc/controller/bootstrap.bash
     sudo systemctl enable --now ziti-controller.service
     sudo systemctl restart ziti-controller.service
+    
+
+    
     echo "重啟 Commander 與 Console 服務"
     echo "進入Console Patch 程序"
     pause
@@ -108,6 +119,15 @@ install_Commander() {
     sudo /opt/openziti/etc/controller/bootstrap.bash
     sudo systemctl enable --now ziti-controller.service
     sudo systemctl restart ziti-controller.service
+    
+    echo "執行 CA 憑證替換程序..."
+    if bash ./caReplace.sh; then
+        echo "✓ CA 憑證替換成功"
+    else
+        echo "✗ CA 憑證替換失敗!"
+        return 1
+    fi
+    
     echo "完成 Commander 服務設置程序，並已啟動中..."
     pause
 }

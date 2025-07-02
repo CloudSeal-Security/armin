@@ -1,0 +1,16 @@
+ca:
+  root:
+    cert: ./ca/root/root.cert.pem
+    key: ./ca/root/root.key.pem
+  intermediate:
+    cert: ./ca/intermediate/intermediate.cert.pem
+    key: ./ca/intermediate/intermediate.key.pem
+    chain: ./ca/intermediate/intermediate.chain.pem
+  client:
+    cert: ./ca/client/client.cert.pem
+    key: ./ca/client/client.key.pem
+    chain: ./ca/client/client.chain.pem
+  server:
+    cert: ./ca/server/server.cert.pem
+    key: ./ca/server/server.key.pem
+    chain: ./ca/server/server.chain.pem
