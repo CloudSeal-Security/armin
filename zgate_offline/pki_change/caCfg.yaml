@@ -6,11 +6,11 @@ ca:
     csr: ./ca/root/root.csr.pem
     is_ca: true
     organization: "eCloudseal Inc."
-    common_name: "ec2-3-26-34-154.ap-southeast-2.compute.amazonaws.com"
+    common_name: "zed.zgate.com"
     validity_years: 10
     validity_month: 0
     validity_day: 0
-    dns_names: ["localhost", "ec2-3-26-34-154.ap-southeast-2.compute.amazonaws.com"]
+    dns_names: ["localhost", "zed.zgate.com"]
     ip_addresses: ["127.0.0.1", "0.0.0.0", "3.26.34.154"]
   intermediate:
     type: intermediate
@@ -21,11 +21,11 @@ ca:
     parent_key: ./ca/root/root.key.pem
     is_ca: true
     organization: "eCloudseal Inc."
-    common_name: "ec2-3-26-34-154.ap-southeast-2.compute.amazonaws.com"
+    common_name: "zed.zgate.com"
     validity_years: 10
     validity_month: 0
     validity_day: 0
-    dns_names: ["localhost", "ec2-3-26-34-154.ap-southeast-2.compute.amazonaws.com"]
+    dns_names: ["localhost", "zed.zgate.com"]
     ip_addresses: ["127.0.0.1", "0.0.0.0", "3.26.34.154"]
   server:
     type: server
@@ -36,11 +36,11 @@ ca:
     parent_key: ./ca/intermediate/intermediate.key.pem
     is_ca: false
     organization: "eCloudseal Inc."
-    common_name: "ec2-3-26-34-154.ap-southeast-2.compute.amazonaws.com"
+    common_name: "zed.zgate.com"
     validity_years: 10
     validity_month: 0
     validity_day: 0
-    dns_names: ["localhost", "ec2-3-26-34-154.ap-southeast-2.compute.amazonaws.com"]
+    dns_names: ["localhost", "zed.zgate.com"]
     ip_addresses: ["127.0.0.1", "0.0.0.0", "3.26.34.154"]
   client:
     type: client
@@ -51,9 +51,9 @@ ca:
     parent_key: ./ca/intermediate/intermediate.key.pem
     is_ca: false
     organization: "eCloudseal Inc."
-    common_name: "ec2-3-26-34-154.ap-southeast-2.compute.amazonaws.com"
+    common_name: "zed.zgate.com"
     validity_years: 10
     validity_month: 0
     validity_day: 0
-    dns_names: ["localhost", "ec2-3-26-34-154.ap-southeast-2.compute.amazonaws.com"]
+    dns_names: ["localhost", "zed.zgate.com"]
     ip_addresses: ["127.0.0.1", "0.0.0.0", "3.26.34.154"]

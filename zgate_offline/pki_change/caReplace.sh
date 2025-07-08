@@ -135,7 +135,7 @@ make_chain() {
 # 替換 CA
 replace_ca() {
     log_info "replace" "開始替換 CA"
-    local dest_dir="/var/lib/private/ziti-controller/pki"
+    local dest_dir="/var/lib/private/zgate-controller/pki"
 
     log_info "replace" "替換根證書"
     local root_cert_dest="$dest_dir/root/certs/root.cert"
@@ -201,7 +201,7 @@ replace_ca() {
 disable_renew_ca() {
     log_info "disable_renew_ca" "開始停用renew CA"
 
-    local env_file="/opt/openziti/etc/controller/service.env"
+    local env_file="/opt/zgate/etc/controller/service.env"
 
     sudo sed -i 's/ZITI_AUTO_RENEW_CERTS=.*/ZITI_AUTO_RENEW_CERTS='\''false'\''/' "$env_file"
 
@@ -211,7 +211,7 @@ disable_renew_ca() {
 # 重新啟動 zgate-controller
 restart_zgate_controller() {
     log_info "restart" "重新啟動 zgate-controller"
-    sudo systemctl restart ziti-controller
+    sudo systemctl restart zgate-controller
     log_info "restart" "zgate-controller 重新啟動完成"
 }
 

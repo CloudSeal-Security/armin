@@ -2,10 +2,10 @@
 
 ### 2025.06.08 ###
 # Version list:
-# openziti_1.5.4_amd64.deb
-# openziti-console_3.12.4_amd64.deb
-# openziti-controller_1.5.4_amd64.deb
-# openziti-router_1.5.4_amd64.deb
+# zgate_1.5.4_amd64.deb
+# zgate-console_3.12.4_amd64.deb
+# zgate-controller_1.5.4_amd64.deb
+# zgate-router_1.5.4_amd64.deb
 #
 pause() {
     echo -e "\n\033[33m操作完成，按任意鍵返回主選單(30秒後自動繼續)...\033[0m"
@@ -26,35 +26,27 @@ check_deb_file() {
 # 安装Commander+ZAC
 install_suite() {
     echo -e "\033[32m開始安装所需元件...\033[0m"
-    check_deb_file "./ziti/openziti_1.5.4_amd64.deb" || return 1
-    # 安裝Ziti 主程式
-    if sudo dpkg -i ./ziti/openziti_1.5.4_amd64.deb; then
-        echo "✓ Ziti 主程式安裝成功"
+    check_deb_file "./zgate/zgate_1.5.4_amd64.deb" || return 1
+    # 安裝Z-Gate 主程式
+    if sudo dpkg -i ./zgate/zgate_1.5.4_amd64.deb; then
+        echo "✓ Z-Gate 主程式安裝成功"
     else
-        echo "✗ Ziti 主程式安裝失敗!"
+        echo "✗ Z-Gate 主程式安裝失敗!"
         return 1
     fi
 
     # 安裝Controller
-    check_deb_file "./controller/openziti-controller_1.5.4_amd64.deb" || return 1
-    if sudo dpkg -i ./controller/openziti-controller_1.5.4_amd64.deb; then
+    check_deb_file "./controller/zgate-controller_1.5.4_amd64.deb" || return 1
+    if sudo dpkg -i ./controller/zgate-controller_1.5.4_amd64.deb; then
         echo "✓ Controller 元件安裝成功"
     else
         echo "✗ Controller 元件安裝失敗!"
         return 1
     fi
 
-    echo "執行 CA 憑證替換程序..."
-    if bash ./pki_change/caReplace.sh; then
-        echo "✓ CA 憑證替換成功"
-    else
-        echo "✗ CA 憑證替換失敗!"
-        return 1
-    fi
-
     # 安裝Console
-    check_deb_file "./console/openziti-console_3.12.4_amd64.deb" || return 1
-    if sudo dpkg -i ./console/openziti-console_3.12.4_amd64.deb; then
+    check_deb_file "./console/zgate-console_3.12.4_amd64.deb" || return 1
+    if sudo dpkg -i ./console/zgate-console_3.12.4_amd64.deb; then
         echo "✓ Console 元件安裝成功"
     else
         echo "✗ Console 元件安裝失敗!"
@@ -63,11 +55,17 @@ install_suite() {
     echo "設置 Commander 參數注意事項"
     echo "Commander 要設定FQDN"
     pause
-    sudo /opt/openziti/etc/controller/bootstrap.bash
-    sudo systemctl enable --now ziti-controller.service
-    sudo systemctl restart ziti-controller.service
-    
+    sudo /opt/zgate/etc/controller/bootstrap.bash
+    sudo systemctl enable --now zgate-controller.service
+    sudo systemctl restart zgate-controller.service
 
+    echo "執行 CA 憑證替換程序..."
+    if bash ./pki_change/caReplace.sh; then
+        echo "✓ CA 憑證替換成功"
+    else
+        echo "✗ CA 憑證替換失敗!"
+        return 1
+    fi
     
     echo "重啟 Commander 與 Console 服務"
     echo "進入Console Patch 程序"
@@ -76,17 +74,17 @@ install_suite() {
     cd console
     tar xvf console_patch.tar
     echo "✓ New Console 元件解縮成功"
-    sudo rm -fr /opt/openziti/share/console
+    sudo rm -fr /opt/zgate/share/console
     echo "✓ 移除 Old Console 元件"  
-    sudo cp -r ./console_patch/ /opt/openziti/share/console
+    sudo cp -r ./console_patch/ /opt/zgate/share/console
     echo "✓ 置換 Console 元件成功" 
     rm -fr ./console_patch/
     cd ..
-    sudo systemctl restart ziti-controller.service
+    sudo systemctl restart zgate-controller.service
     echo "Console Patch 程序完成"
     pause
     echo "重啟新 Console 服務"
-    sudo systemctl restart ziti-controller.service
+    sudo systemctl restart zgate-controller.service
     echo "Commander 與 Console 服務設置程序，並已重啟"
     pause
 }
@@ -94,18 +92,18 @@ install_suite() {
 # 安装Commander
 install_Commander() {
     echo -e "\033[32m開始安装所需元件...\033[0m"
-    check_deb_file "./ziti/openziti_1.5.4_amd64.deb" || return 1
-    # 安裝Ziti 主程式
-    if sudo dpkg -i ./ziti/openziti_1.5.4_amd64.debb; then
-        echo "✓ Ziti 主程式安裝成功"
+    check_deb_file "./zgate/zgate_1.5.4_amd64.deb" || return 1
+    # 安裝Z-Gate 主程式
+    if sudo dpkg -i ./zgate/zgate_1.5.4_amd64.deb; then
+        echo "✓ Z-Gate 主程式安裝成功"
     else
-        echo "✗ Ziti 主程式安裝失敗!"
+        echo "✗ Z-Gate 主程式安裝失敗!"
         return 1
     fi
 
     # 安裝Controller
-    check_deb_file "./controller/openziti-controller_1.5.4_amd64.deb" || return 1
-    if sudo dpkg -i ./controller/openziti-controller_1.5.4_amd64.deb; then
+    check_deb_file "./controller/zgate-controller_1.5.4_amd64.deb" || return 1
+    if sudo dpkg -i ./controller/zgate-controller_1.5.4_amd64.deb; then
         echo "✓ Commander 元件安裝成功"
     else
         echo "✗ Commander 元件安裝失敗!"
@@ -116,9 +114,9 @@ install_Commander() {
     pause
     echo "啟動Commander服務"
     pause
-    sudo /opt/openziti/etc/controller/bootstrap.bash
-    sudo systemctl enable --now ziti-controller.service
-    sudo systemctl restart ziti-controller.service
+    sudo /opt/zgate/etc/controller/bootstrap.bash
+    sudo systemctl enable --now zgate-controller.service
+    sudo systemctl restart zgate-controller.service
     
     echo "執行 CA 憑證替換程序..."
     if bash ./caReplace.sh; then
@@ -136,18 +134,18 @@ install_Commander() {
 install_Router() {
     echo -e "\033[32m開始安装所需元件...\033[0m"
 
-    # 安裝Ziti 主程式
-    check_deb_file "./ziti/openziti_1.5.4_amd64.deb" || return 1
-    if sudo dpkg -i ./ziti/openziti_1.5.4_amd64.deb; then
-        echo "✓ Ziti 主程式安裝成功"
+    # 安裝Z-Gate 主程式
+    check_deb_file "./zgate/zgate_1.5.4_amd64.deb" || return 1
+    if sudo dpkg -i ./zgate/zgate_1.5.4_amd64.deb; then
+        echo "✓ Z-Gate 主程式安裝成功"
     else
-        echo "✗ Ziti 主程式安裝失敗!"
+        echo "✗ Z-Gate 主程式安裝失敗!"
         return 1
     fi
 
     # 安裝Router
-    check_deb_file "./router/openziti-router_1.5.4_amd64.deb" || return 1
-    if sudo dpkg -i ./router/openziti-router_1.5.4_amd64.deb; then
+    check_deb_file "./router/zgate-router_1.5.4_amd64.deb" || return 1
+    if sudo dpkg -i ./router/zgate-router_1.5.4_amd64.deb; then
         echo "✓ Router 元件安裝成功"
     else
         echo "✗ Router 元件安裝失敗!"
@@ -160,9 +158,9 @@ install_Router() {
     pause
     echo "啟動Router服務"
     pause
-    sudo /opt/openziti/etc/router/bootstrap.bash
-    sudo systemctl enable --now ziti-router.service
-    sudo systemctl restart ziti-router.service
+    sudo /opt/zgate/etc/router/bootstrap.bash
+    sudo systemctl enable --now zgate-router.service
+    sudo systemctl restart zgate-router.service
     echo "完成 Router 服務設置程序，並已啟動中..."
 
     pause
