@@ -215,6 +215,19 @@
                         [allNames]="associatedServicePolicyNames"
                     ></lib-preview-list>
                 </lib-form-field-container>
+<<<<<<< HEAD
+=======
+                <lib-form-field-container
+                        [title]="'API Calls'"
+                        [label]="''"
+                >
+                    <div class="form-row">
+                        <input class="form-field-input" [value]="apiCallURL" readonly/>
+                        <div class="url-copy icon-copy copy" (click)="copyToClipboard(apiCallURL)"></div>
+                    </div>
+                    <lib-json-view *ngIf="formData" [(data)]="apiData" [readOnly]="true" [showCopy]="true"></lib-json-view>
+                </lib-form-field-container>
+>>>>>>> 7d13daa (first commit)
             </div>
         </div>
         <div class="form-group-column" *ngIf="formView === 'raw'">

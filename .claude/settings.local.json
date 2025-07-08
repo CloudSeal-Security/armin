@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+<<<<<<< HEAD
       "Bash(tar:*)",
       "Bash(mkdir:*)",
       "Bash(rm:*)",
@@ -20,6 +21,9 @@
       "Bash(npm run:*)",
       "Bash(git checkout:*)",
       "Bash(ng build:*)"
+=======
+      "Bash(tar:*)"
+>>>>>>> 7d13daa (first commit)
     ],
     "deny": []
   }

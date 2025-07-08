@@ -1,0 +1,59 @@
+ca:
+  root:
+    type: root
+    cert: ./ca/root/root.cert.pem
+    private_key: ./ca/root/root.key.pem
+    csr: ./ca/root/root.csr.pem
+    is_ca: true
+    organization: "eCloudseal Inc."
+    common_name: "zed.zgate.com"
+    validity_years: 10
+    validity_month: 0
+    validity_day: 0
+    dns_names: ["localhost", "zed.zgate.com"]
+    ip_addresses: ["127.0.0.1", "0.0.0.0", "3.26.34.154"]
+  intermediate:
+    type: intermediate
+    cert: ./ca/intermediate/intermediate.cert.pem
+    private_key: ./ca/intermediate/intermediate.key.pem
+    csr: ./ca/intermediate/intermediate.csr.pem
+    parent_cert: ./ca/root/root.cert.pem
+    parent_key: ./ca/root/root.key.pem
+    is_ca: true
+    organization: "eCloudseal Inc."
+    common_name: "zed.zgate.com"
+    validity_years: 10
+    validity_month: 0
+    validity_day: 0
+    dns_names: ["localhost", "zed.zgate.com"]
+    ip_addresses: ["127.0.0.1", "0.0.0.0", "3.26.34.154"]
+  server:
+    type: server
+    cert: ./ca/server/server.cert.pem
+    private_key: ./ca/server/server.key.pem
+    csr: ./ca/server/server.csr.pem
+    parent_cert: ./ca/intermediate/intermediate.cert.pem
+    parent_key: ./ca/intermediate/intermediate.key.pem
+    is_ca: false
+    organization: "eCloudseal Inc."
+    common_name: "zed.zgate.com"
+    validity_years: 10
+    validity_month: 0
+    validity_day: 0
+    dns_names: ["localhost", "zed.zgate.com"]
+    ip_addresses: ["127.0.0.1", "0.0.0.0", "3.26.34.154"]
+  client:
+    type: client
+    cert: ./ca/client/client.cert.pem
+    private_key: ./ca/client/client.key.pem
+    csr: ./ca/client/client.csr.pem
+    parent_cert: ./ca/intermediate/intermediate.cert.pem
+    parent_key: ./ca/intermediate/intermediate.key.pem
+    is_ca: false
+    organization: "eCloudseal Inc."
+    common_name: "zed.zgate.com"
+    validity_years: 10
+    validity_month: 0
+    validity_day: 0
+    dns_names: ["localhost", "zed.zgate.com"]
+    ip_addresses: ["127.0.0.1", "0.0.0.0", "3.26.34.154"]

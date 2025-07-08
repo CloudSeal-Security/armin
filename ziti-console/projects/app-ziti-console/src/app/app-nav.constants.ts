@@ -77,15 +77,23 @@ export const OPEN_ZITI_NAVIGATOR = {
                     label: 'Authentication',
                     route: URLS.ZITI_CERT_AUTHORITIES,
                     iconClass: 'authentication-icon',
+<<<<<<< HEAD
                     selectedRoutes: [URLS.ZITI_CERT_AUTHORITIES],
                     hidden: true
+=======
+                    selectedRoutes: [URLS.ZITI_CERT_AUTHORITIES]
+>>>>>>> 7d13daa (first commit)
                 },
                 {
                     label: 'Sessions',
                     route: URLS.ZITI_SESSIONS,
                     iconClass: 'sessions-icon',
+<<<<<<< HEAD
                     selectedRoutes: [URLS.ZITI_SESSIONS],
                     hidden: true
+=======
+                    selectedRoutes: [URLS.ZITI_SESSIONS]
+>>>>>>> 7d13daa (first commit)
                 },
             ]
         }
@@ -144,15 +152,23 @@ export const CLASSIC_ZITI_NAVIGATOR = {
                     label: 'Authentication',
                     route: URLS.ZITI_CERT_AUTHORITIES,
                     iconClass: 'authentication-icon',
+<<<<<<< HEAD
                     selectedRoutes: [URLS.ZITI_CERT_AUTHORITIES],
                     hidden: true
+=======
+                    selectedRoutes: [URLS.ZITI_CERT_AUTHORITIES]
+>>>>>>> 7d13daa (first commit)
                 },
                 {
                     label: 'Sessions',
                     route: URLS.ZITI_SESSIONS,
                     iconClass: 'sessions-icon',
+<<<<<<< HEAD
                     selectedRoutes: [URLS.ZITI_SESSIONS],
                     hidden: true
+=======
+                    selectedRoutes: [URLS.ZITI_SESSIONS]
+>>>>>>> 7d13daa (first commit)
                 },
             ]
         }

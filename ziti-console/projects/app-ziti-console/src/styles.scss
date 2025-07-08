@@ -157,6 +157,7 @@ app-zac-wrapper {
 html {
   overflow-x: hidden;
 }
+<<<<<<< HEAD
 
 /* Authentication UI 隱藏 - SDS實作 */
 /* 隱藏所有Authentication相關UI元素 - 瀏覽器相容版本 */
@@ -201,3 +202,5 @@ button[onclick*="authentication"],
     display: none !important;
 }
 /* Authentication UI 隱藏結束 */
+=======
+>>>>>>> 7d13daa (first commit)
