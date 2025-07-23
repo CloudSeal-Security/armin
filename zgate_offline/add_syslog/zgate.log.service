@@ -1,0 +1,27 @@
+[Unit]
+Description=Z-Gate Log Converter
+BindsTo=ziti-controller.service
+After=network-online.target ziti-controller.service
+Requires=ziti-controller.service
+PartOf=ziti-controller.service
+
+[Service]
+Type=exec
+ExecStart=/opt/openziti/scripts/convert_circuits.sh
+Restart=on-failure
+RestartSec=10s
+User=root
+WorkingDirectory=/opt/openziti/scripts
+StandardOutput=journal
+StandardError=journal
+
+# 資源限制 (根據實際情況調整)
+# MemoryLimit=200M
+# CPUQuota=50%
+
+# 日誌限制
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=500
+
+[Install]
+WantedBy=multi-user.target
