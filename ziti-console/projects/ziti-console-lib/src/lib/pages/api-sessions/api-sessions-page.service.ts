@@ -205,7 +205,7 @@ export class ApiSessionsPageService extends ListPageServiceClass {
     }
 
     getData(filters?: FilterObj[], sort?: any) {
-        if (sort.sortBy === 'name') {
+        if (sort && sort.sortBy === 'name') {
             sort.sortBy = 'id';
         }
         // we can customize filters or sorting here before moving on...

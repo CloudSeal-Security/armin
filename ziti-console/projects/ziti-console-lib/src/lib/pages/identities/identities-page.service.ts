@@ -31,7 +31,7 @@ import {unset} from "lodash";
 import {ITooltipAngularComp} from "ag-grid-angular";
 import {ITooltipParams} from "ag-grid-community";
 import {OSTooltipComponent} from "../../features/data-table/tooltips/os-tooltip.component";
-import {SDKTooltipComponent} from "../../features/data-table/tooltips/sdk-tooltip.component";
+
 import {GrowlerModel} from "../../features/messaging/growler.model";
 import {GrowlerService} from "../../features/messaging/growler.service";
 import {ResetEnrollmentComponent} from "../../features/reset-enrollment/reset-enrollment.component";
@@ -47,7 +47,15 @@ import {TableCellNameComponent} from "../../features/data-table/cells/table-cell
 })
 export class IdentitiesPageService extends ListPageServiceClass {
 
-    private paging = this.DEFAULT_PAGING;
+    private paging = {
+        filter: "",
+        noSearch: false,
+        order: "asc",
+        page: 1,
+        searchOn: "name",
+        sort: "name",
+        total: 10
+    };
     public modalType = 'identities';
 
     override CSV_COLUMNS = [
@@ -79,7 +87,7 @@ export class IdentitiesPageService extends ListPageServiceClass {
         {name: 'Edit', action: 'update'},
         {name: 'Download JWT', action: 'download-enrollment'},
         {name: 'View QR', action: 'qr-code'},
-        {name: 'Visualizer', action: 'identity-service-path'},
+       //remark 20250720 by James Lai {name: 'Visualizer', action: 'identity-service-path'},
         {name: 'Reset Enrollment', action: 'reset-enrollment'},
         {name: 'Reissue Enrollment', action: 'reissue-enrollment'},
         {name: 'Reset MFA', action: 'reset-mfa'},
@@ -144,23 +152,7 @@ export class IdentitiesPageService extends ListPageServiceClass {
               </div>`
         }
 
-        const sdkRenderer = (row) => {
-            let sdk = "";
-            let version = "-";
-            const sdkInfo = row?.data?.sdkInfo;
-            if (sdkInfo) {
-                version = "";
-                if (sdkInfo?.version) version += sdkInfo?.version;
-                if (sdkInfo?.appId) sdk += sdkInfo?.appId;
-                if (sdkInfo?.appVersion) sdk += sdkInfo?.appVersion;
-                if (sdkInfo?.type) sdk += sdkInfo?.type;
-                if (sdkInfo?.type) sdk += "&#10;"+sdkInfo?.branch;
-                if (sdkInfo?.revision) sdk += " - "+sdkInfo?.revision;
-            }
-            return`<div class="col desktop" data-id="${row?.data?.id}" style="overflow: unset;" data-balloon-pos="up" aria-label="${sdk}">
-                <span class="oneline">${version}</span>
-             </div>`;
-        }
+
 
         const columnFilters = this.columnFilters;
 
@@ -240,18 +232,7 @@ export class IdentitiesPageService extends ListPageServiceClass {
                 resizable: true,
                 cellClass: 'nf-cell-vert-align tCol',
             },
-            {
-                colId: 'sdk',
-                field: 'sdk',
-                headerName: 'SDK',
-                tooltipField: 'sdkInfo',
-                cellRenderer: sdkRenderer,
-                headerComponent: TableColumnDefaultComponent,
-                tooltipComponent: SDKTooltipComponent,
-                resizable: true,
-                cellClass: 'nf-cell-vert-align tCol',
-                width: 125,
-            },
+
             {
                 colId: 'type',
                 field: 'type',
@@ -331,6 +312,18 @@ export class IdentitiesPageService extends ListPageServiceClass {
         if (!isEmpty(results?.data)) {
             //pre-process data before rendering
             results.data = this.addActionsPerRow(results);
+            // 將 Type 為 'Router' 或 'Admin' 的 identity 排序到最後，Admin 最後
+            results.data = results.data.sort((a, b) => {
+                const aIsAdmin = a.typeId === 'Admin' || a.name === 'Default Admin';
+                const bIsAdmin = b.typeId === 'Admin' || b.name === 'Default Admin';
+                const aIsRouter = a.typeId === 'Router';
+                const bIsRouter = b.typeId === 'Router';
+                if (aIsAdmin && !bIsAdmin) return 1;
+                if (!aIsAdmin && bIsAdmin) return -1;
+                if (aIsRouter && !bIsRouter) return 1;
+                if (!aIsRouter && bIsRouter) return -1;
+                return 0;
+            });
         }
         return results;
     }

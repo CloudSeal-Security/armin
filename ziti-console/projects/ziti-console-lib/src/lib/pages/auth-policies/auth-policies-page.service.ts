@@ -182,9 +182,13 @@ export class AuthPoliciesPageService extends ListPageServiceClass {
         return firstValueFrom(this.dialogRef.afterClosed());
     }
 
-    getData(filters?: FilterObj[], sort?: any) {
+    getData(filters?: FilterObj[], sort?: any, page?: any) {
         // we can customize filters or sorting here before moving on...
-        return super.getTableData(this.resourceType, this.paging, filters, sort)
+        const paging = {...this.paging};
+        if (page) {
+            paging.offset = (page - 1) * paging.total;
+        }
+        return super.getTableData('auth-policies', paging, filters, sort)
             .then((results: any) => {
                 return this.processData(results);
             });

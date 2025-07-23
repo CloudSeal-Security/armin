@@ -1,199 +1,272 @@
-    <style>
-:host {
-    display: block;
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-}
-
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    background-image: url('./assets/images/login_bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-.login-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(3px);
-}
-
-.loginForm {
-    position: relative;
-    z-index: 1;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 2.5rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    width: 400px;
-    text-align: center;
-    margin: 0 auto;
-}
-
-.logo-container {
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.logo-container img {
-    width: 128px;
-    height: 128px;
-}
-
-.title {
-    color: #ffffff;
-    font-size: 24px;
-    font-weight: 600;
-    margin: 1rem 0;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.input-group {
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 0.5rem;
-    margin: 1rem 0;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
-
-.input-group:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.input-group img {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-    opacity: 0.8;
-}
-
-.input-group input {
-    background: transparent;
-    border: none;
-    color: #ffffff !important;
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-}
-
-.input-group input::placeholder {
-    color: rgba(255, 255, 255, 0.7) !important;
-}
-
-.input-group input:focus {
-    outline: none;
-    color: #ffffff !important;
-}
-
-.input-group input:-webkit-autofill,
-.input-group input:-webkit-autofill:hover,
-.input-group input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #ffffff !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 1.5rem;
-}
-
-.button {
-    background: linear-gradient(45deg, #045ecb, #1E90FF);
-    color: white;
-    border: none;
-    padding: 12px 48px;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(2, 115, 251, 0.3);
-    min-width: 200px;
-}
-
-.button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(2, 115, 251, 0.4);
-    background: linear-gradient(45deg, #1E90FF, #045ecb);
-}
-
-.button:disabled {
-    background: #cccccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-.login-disabled {
-    opacity: 0.5;
-    pointer-events: none;
-}
-    </style>
-
-
+<style>
+    :host {
+        display: block;
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        background-image: url('./assets/images/login_bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    
+    .login-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+    }
+    
+    .loginForm {
+        position: relative;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        width: 400px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    
+    .logo-container {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .logo-container img {
+        width: 128px;
+        height: 128px;
+    }
+    
+    .title {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 600;
+        margin: 1rem 0;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .input-group {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.5rem;
+        margin: 1rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .input-group:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .input-group img {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+        opacity: 0.8;
+    }
+    
+    .input-group input {
+        background: transparent;
+        border: none;
+        color: #ffffff !important;
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    .input-group input::placeholder {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    .input-group input:focus {
+        outline: none;
+        color: #ffffff !important;
+    }
+    
+    .input-group input:-webkit-autofill,
+    .input-group input:-webkit-autofill:hover,
+    .input-group input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #ffffff !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+    
+    .buttons {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+    
+    .button {
+        background: linear-gradient(45deg, #045ecb, #1E90FF);
+        color: white;
+        border: none;
+        padding: 7px 29px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(2, 115, 251, 0.3);
+        min-width: 120px;
+    }
+    
+    .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(2, 115, 251, 0.4);
+        background: linear-gradient(45deg, #1E90FF, #045ecb);
+    }
+    
+    .button:disabled {
+        background: hwb(255 17% 78%);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .login-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+    
+    .button-small {
+        padding: 8px 24px;
+        min-width: 80px;
+        font-size: 12px;
+    }
+    
+    .linkButton {
+        color: #fff;
+    }
+    
+    .button-group {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .input-group.commander-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        width: 100%;
+        margin: 0 auto 1.5rem auto;
+    }
+    .input-group.commander-group lib-string-input {
+        width: 100%;
+    }
+</style>
 <div class="login-container">
     <div class="loginForm standard-form-fields" (keyup.enter)="next()">
         <div class="logo-container">
             <img src="./assets/images/Z-Gate_Logo.png" width="512" height="512"alt="Z-Gate Logo">
         </div>
-        <div class="title">Z-Gate Admin Console</div>
-        <div class="input-group">
-            <img src="./assets/images/username.png" width="ˇ64" height="64" alt="Username">
-            <input
-                id="Username"
-                name="username"
-                type="text"
-                autocomplete="on"
-                required
-                [ngClass]="{'login-disabled': showNoControllers}"
-                [placeholder]="'enter username'"
-                (change)="usernameChange($event)"
-                (keyup)="usernameChange($event)"
-            >
-        </div>
-        <div class="input-group">
-            <img src="./assets/images/password.png" width="64" height="64" alt="Password">
-            <input
-                id="Password"
-                name="password"
-                type="password"
-                autocomplete="on"
-                required
-                [ngClass]="{'login-disabled': showNoControllers}"
-                [placeholder]="'enter password'"
-                (change)="passwordChange($event)"
-                (keyup)="passwordChange($event)"
-            >
-        </div>
-        <div class="buttons">
-            <button class="button" (click)="login()" [ngClass]="{'login-disabled': showNoControllers}">Login</button>
+
+        <div *ngIf="!isLoading">
+            <div class="title">Z-Gate Admin Console</div>
+            <div *ngIf="showAddController">
+                <div class="input-group commander-group">
+                    <lib-string-input [fieldName]="'Commander Name'" [(fieldValue)]="edgeName" [error]="edgeNameError" [placeholder]="'enter a name for your commnder'"></lib-string-input>
+                    <lib-string-input [fieldName]="'URL'" [(fieldValue)]="edgeUrl" [error]="edgeUrlError" [placeholder]="'e.g. https://example.domain.io:1280/'" [helpText]="helpText" [fieldClass]="controllerInvalid ? 'invalid' : ''"></lib-string-input>
+                </div>
+                <div class="button-group">
+                    <button class="button" *ngIf="edgeControllerList.length > 0" (click)="reset()">Back</button>
+                    <button class="button" (click)="create()" [disabled]="!edgeName ||!edgeUrl">Setup</button>
+                </div>
+            </div>
+
+
+            <div *ngIf="!showAddController">
+                <lib-selector-input
+                        *ngIf="!svc.originIsController && !showNoControllers"
+                        [fieldName]="'Commander'"
+                        [(fieldValue)]="selectedEdgeController"
+                        [error]="edgeNameError"
+                        [placeholder]="controllerSelectPlaceholder"
+                        [valueList]="edgeControllerList"
+                        [helpText]="helpText"
+                        [fieldClass]="controllerInvalid ? 'invalid' : ''"
+                        (fieldValueChange)="edgeChanged($event)"
+                >
+                </lib-selector-input>
+                <div *ngIf="showNoControllers"class="no-controllers-warning">
+                    <span class="warning-title"><b>No Commander Available</b></span>
+                    <span>You must set at least one commander URL, prior to starting the ZGC node server</span>
+                    <span>Set an environment variable named <b class="env-var-text">ZGC_Commander_URLS</b> before starting the server</span>
+                    <span>It must be a comma seperated list of 1 or more URLs. For Example:</span>
+                    <code>ZAC_CONTROLLER_URLS=https://localhost:1280,https://example.domain.io:443</code>
+                </div>
+                <div class="input-group">
+                    <img src="./assets/images/username.png" width="ˇ64" height="64" alt="Username">
+                    <input
+                            id="Username"
+                            name="username"
+                            type="text"
+                            autocomplete="on"
+                            required
+                            [ngClass]="{'login-disabled': showNoControllers}"
+                            [placeholder]="'Enter Username'"
+                            (change)="usernameChange($event)"
+                            (keyup)="usernameChange($event)"
+                    >
+                </div>
+                <div class="input-group">
+                    <img src="./assets/images/password.png" width="64" height="64" alt="Password">
+                    <input
+                            id="Password"
+                            name="password"
+                            type="password"
+                            autocomplete="on"
+                            required
+                            [ngClass]="{'login-disabled': showNoControllers}"
+                            [placeholder]="'Enter Password'"
+                            (change)="passwordChange($event)"
+                            (keyup)="passwordChange($event)"
+                    >
+                </div>
+                <div class="buttons">
+                    <button class="button" (click)="login()" [ngClass]="{'login-disabled': showNoControllers}">Login</button>
+                </div>
+                <div *ngIf='extJwtSigners && extJwtSigners.length > 0' class="divider-container"><div class="idp-divider"></div><span class="id-divider-label">or log in with</span><div class="idp-divider"></div></div>
+                <div *ngIf='extJwtSigners && extJwtSigners.length > 0' class="idp-buttons-container">
+                    <div class="idp-button"
+                        *ngFor="let jwtSigner of extJwtSigners"
+                        (click)="handleOAuthLogin(jwtSigner)"
+                    >
+                        {{jwtSigner.name}}
+                        <div class="spinner" *ngIf="oauthLoading === jwtSigner.name"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <lib-loading-indicator [isLoading]="isLoading || extJwtSignersLoading"></lib-loading-indicator>
 </div>

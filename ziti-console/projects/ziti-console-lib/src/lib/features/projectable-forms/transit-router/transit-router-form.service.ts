@@ -83,7 +83,7 @@ export class TransitRouterFormService {
             page: 1,
             searchOn: "name",
             sort: "name",
-            total: 100
+            total: 10
         }
         return this.zitiService.get('auth-policies', paging, []).then((result: any) => {
             return [{id: 'default', name: 'Default'}, ...result.data];

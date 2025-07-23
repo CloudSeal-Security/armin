@@ -239,11 +239,6 @@ aside .icon {
     box-sizing: var(--shadow);
 }
 
-.hashtager {
-    margin-top: 0rem !important;
-    margin-bottom: 0.3125rem !important;
-}
-
 .title {
     color: #e28015;
     font-size: 2.125rem;
@@ -2057,52 +2052,6 @@ path.green {
     opacity: 1.0;
 }
 
-.hashtag.clickable {
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.hashtag.clickable.clicked {
-    cursor: default;
-    background-color: var(--menu);
-    color: #FFF;
-}
-
-.hashtag.clickable:hover {
-    cursor: pointer;
-    opacity: 0.6;
-}
-
-.hashtag {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    background-color: #03499d;
-    color: #FFF;
-    position: relative;
-    display: inline-block;
-    float: none;
-    line-height: 1.875rem;
-    border-radius: var(--inputBorderRadius);
-    margin: 0;
-    transition: var(--transition);
-    white-space: nowrap;
-}
-
-.hashtag .tag-name {
-    color: #e28015;
-}
-
-.hashtag:hover {
-    background-color: #0355b3;
-    opacity: 1;
-}
-
-.attag {
-    background-color: var(--secondary);
-    filter: brightness(90%);
-    position: absolute;
-}
-
 .tagButton {
     cursor: pointer;
     transition: var(--transition);
@@ -2132,31 +2081,6 @@ path.green {
     padding-right: 0.625rem;
     color: #FFF;
     background-color: var(--primary);
-    position: relative;
-    float: left;
-    line-height: 1.875rem;
-    border-radius: var(--inputBorderRadius);
-    margin-left: 0.625rem;
-    margin-bottom: 0.625rem;
-    transition: var(--transition);
-}
-
-.tagButton .label, .tagButton.attag .label {
-    font-size: 1rem;
-    font-family: "Open Sans";
-    margin-left: 0.3125rem;
-}
-
-.tagButton.attag.error, .tagButton.error {
-    background-color: var(--red);
-}
-
-.tagButton.attag {
-    margin-top: unset;
-    padding-left: 0.625rem;
-    padding-right: 0.625rem;
-    color: #FFF;
-    background-color: var(--secondary);
     position: relative;
     float: left;
     line-height: 1.875rem;
@@ -3273,4 +3197,15 @@ button[aria-label][data-balloon-pos] {
     padding: 0.5rem; /* 增加容器的內邊距，從 0.3125rem 改為 0.5rem */
     min-height: 2.5rem;
     align-items: flex-start;
+}
+
+/* 修改按鈕的文字顏色，讓它們看起來更清晰 2025/07/21 James Lai */
+#ProfileButton.link, #SettingsButton.link, #LogoutButton.link{
+    color: #fff !important;
+}
+
+/* 讓加號icon與save/cancel按鈕的文字為白色 2025/07/21 James Lai */
+action.icon-plus.icon-add::before,
+button.button.save.cancel {
+    color: #fff !important;
 }

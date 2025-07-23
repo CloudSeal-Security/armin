@@ -74,12 +74,6 @@ export const OPEN_ZITI_NAVIGATOR = {
             label: 'Management',
             menuItems: [
                 {
-                    label: 'Authentication',
-                    route: URLS.ZITI_CERT_AUTHORITIES,
-                    iconClass: 'authentication-icon',
-                    selectedRoutes: [URLS.ZITI_CERT_AUTHORITIES]
-                },
-                {
                     label: 'Sessions',
                     route: URLS.ZITI_SESSIONS,
                     iconClass: 'sessions-icon',
@@ -137,12 +131,6 @@ export const CLASSIC_ZITI_NAVIGATOR = {
                     route: URLS.ZITI_ROUTERS,
                     iconClass: 'routers-icon',
                     selectedRoutes: [URLS.ZITI_ROUTERS]
-                },
-                {
-                    label: 'Authentication',
-                    route: URLS.ZITI_CERT_AUTHORITIES,
-                    iconClass: 'authentication-icon',
-                    selectedRoutes: [URLS.ZITI_CERT_AUTHORITIES]
                 },
                 {
                     label: 'Sessions',

@@ -80,7 +80,7 @@ export abstract class ListPageServiceClass {
         page: 1,
         searchOn: "name",
         sort: "name",
-        total: 50
+        total: 10
     }
     totalCount = 0;
     dataService: ZitiDataService;

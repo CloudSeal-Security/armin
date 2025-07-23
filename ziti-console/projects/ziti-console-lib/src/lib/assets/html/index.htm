@@ -25,10 +25,10 @@
 
     #DashHeader.grid.dashboard {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         width: 100%;
-        max-width: 1400px;
-        margin: 0 auto;
+        max-width: 1320px;
+        margin: 0;
         padding: 1rem;
     }
 
@@ -40,9 +40,9 @@
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         display: grid;
-        grid-template-columns: 5rem repeat(7, minmax(6rem, 1fr));
+        grid-template-columns: repeat(8, 0.8fr);
         align-items: stretch;
-        gap: 0.75rem;
+        gap: 0.9rem;
         padding: 1rem;
         width: 100%;
         border-radius: 12px;
@@ -53,50 +53,32 @@
         border-color: rgba(255, 255, 255, 0.2);
     }
 
-    #DashHeader .totalPod {
-        background: rgba(26, 27, 38, 0.4);
-        border-radius: 8px;
-        padding: 0.75rem 0.5rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    #DashHeader .totalPod, #DashHeader .iconLink {
+        background: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%);
+        border-radius: 16px;
+        border: 1.5px solid rgba(255,255,255,0.18);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        padding: 0.96rem 0.56rem;
+        min-height: 6rem;
+        min-width: 5.6rem;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        min-height: 5rem;
-        min-width: 6rem;
-        height: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        gap: 0.5rem;
+        gap: 0.7rem;
         position: relative;
         overflow: hidden;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #DashHeader .totalPod::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border: 2px solid transparent;
-        border-radius: 8px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
     }
-
-    #DashHeader .totalPod:hover {
-        background: rgba(26, 27, 38, 0.8);
-        transform: translateY(-4px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        border-color: var(--primary);
-    }
-
-    #DashHeader .totalPod:hover::before {
-        border-color: var(--primary);
-        box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+    #DashHeader .totalPod:hover, #DashHeader .iconLink:hover {
+        background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%);
+        border-color: rgba(0,123,255,0.18);
+        box-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.18);
+        transform: translateY(-4px) scale(1.03);
     }
 
     #DashHeader .totalPod .total {
@@ -163,17 +145,17 @@
         }
         
         #DashHeader .grid.numbers {
-            grid-template-columns: 5rem repeat(7, minmax(5rem, 1fr));
-            gap: 0.5rem;
-            padding: 0.75rem;
+            grid-template-columns: 4rem repeat(7, minmax(4rem, 0.8fr));
+            gap: 0.44rem;
+            padding: 0.6rem;
         }
     }
 
     @media (max-width: 1200px) {
         #DashHeader .grid.numbers {
-            grid-template-columns: 5rem repeat(7, minmax(4rem, 1fr));
-            gap: 0.5rem;
-            padding: 0.75rem;
+            grid-template-columns: 4rem repeat(7, minmax(3.2rem, 0.8fr));
+            gap: 0.44rem;
+            padding: 0.6rem;
         }
     }
 
@@ -285,47 +267,41 @@
     }
 
     #DashHeader .iconLink {
-        background: rgba(26, 27, 38, 0.4);
-        border-radius: 8px;
-        padding: 0.75rem 0.5rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        min-width: 6rem;
+        min-height: 5rem;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        text-align: center;
-        min-height: 5rem;
-        min-width: 6rem;
-        height: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(26, 27, 38, 0.4);
         gap: 0.5rem;
         position: relative;
         overflow: hidden;
-    }
-
-    #DashHeader .iconLink::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border: 2px solid transparent;
-        border-radius: 8px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
+        text-align: center;
     }
-
     #DashHeader .iconLink:hover {
         background: rgba(26, 27, 38, 0.8);
         transform: translateY(-4px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         border-color: var(--primary);
     }
-
-    #DashHeader .iconLink:hover::before {
-        border-color: var(--primary);
-        box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+    #DashHeader .iconLink .label {
+        color: var(--text);
+        font-size: 0.875rem;
+        opacity: 0.9;
+        text-align: center;
+        width: 100%;
+        line-height: 1.2;
+        padding: 0.25rem 0;
+        margin: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     #DashHeader .network-visualizer {
@@ -346,23 +322,6 @@
     #DashHeader .iconLink:hover .network-visualizer {
         transform: scale(1.1);
         filter: brightness(0) invert(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
-    }
-
-    #DashHeader .iconLink .label {
-        color: var(--text);
-        font-size: 0.875rem;
-        opacity: 0.9;
-        text-align: center;
-        width: 100%;
-        line-height: 1.2;
-        padding: 0.25rem 0;
-        margin: 0;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    #DashHeader .iconLink:hover .label {
-        opacity: 1;
-        transform: translateY(2px);
     }
 
     #DashHeader .iconLink .topology-icon {
@@ -871,28 +830,28 @@
         background: rgba(19, 20, 31, 0.6);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         border-radius: 12px;
         padding: 1.25rem;
         margin: 1rem 0;
         max-width: 550px;
-        max-height: 500px;
-        min-height: 150px;
+        max-height: 580px;
+        min-height: 180px;
         overflow-y: auto;
     }
     .os-stats-container {
         background: rgba(19, 20, 31, 0.6);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         border-radius: 12px;
         padding: 1.25rem;
         margin: 1rem 0;
         max-width: 250px;
-        max-height: 500px;
-        min-height: 150px;
+        max-height: 580px;
+        min-height: 180px;
         overflow-y: auto;
     }
 
@@ -1001,6 +960,173 @@
         font-weight: 500;
         color: #e0e0e0;
     }
+
+    /* 保證所有 a 標籤之間有一致的間隔 */
+    #DashHeader .grid.numbers a {
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    /* License Status Card Styles (from side-navbar.component.scss) */
+    .license-status.dashboard-license-status {
+        background: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%);
+        border-radius: 16px;
+        border: 1.5px solid rgba(255,255,255,0.18);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        padding: 0.96rem 0.56rem;
+        min-height: 6rem;
+        min-width: 8rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 0.7rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* 讓 grid 對齊 */
+        box-sizing: border-box;
+        width: 180%;
+    }
+    .license-status.dashboard-license-status::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(0, 150, 255, 0) 0%, rgba(0, 150, 255, 0.3) 50%, rgba(0, 150, 255, 0) 100%);
+    }
+    .license-status.dashboard-license-status .license-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .license-status.dashboard-license-status .license-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    }
+    .license-status.dashboard-license-status .license-status-badge {
+        font-size: 14px;
+        padding: 3px 8px;
+        border-radius: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .license-status-badge.status-active {
+        background: linear-gradient(135deg, #4caf50, #66bb6a);
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .license-status-badge.status-low {
+        background: linear-gradient(135deg, #ff9800, #ffb74d);
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .license-status-badge.status-limit {
+        background: linear-gradient(135deg, #f44336, #ef5350);
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .license-status-badge.status-unlimited {
+        background: linear-gradient(135deg, #2196f3, #64b5f6);
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 12px rgba(33, 150, 243, 0.4);
+    }
+    .license-status.dashboard-license-status .license-info {
+        margin-bottom: 8px;
+    }
+    .license-status.dashboard-license-status .license-count,
+    .license-status.dashboard-license-status .license-time {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+        font-size: 11px;
+    }
+    .license-status.dashboard-license-status .count-label,
+    .license-status.dashboard-license-status .time-label {
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+    }
+    .license-status.dashboard-license-status .count-value,
+    .license-status.dashboard-license-status .time-value {
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    }
+    .license-status.dashboard-license-status .count-value.unlimited,
+    .license-status.dashboard-license-status .time-value.unlimited {
+        color: #00f2fe;
+        font-weight: 700;
+        font-size: 16px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        animation: pulse 2s infinite;
+    }
+    .license-status.dashboard-license-status .unlimited-symbol {
+        font-size: 24px;
+        font-weight: 800;
+        color: #00f2fe;
+        text-shadow: 0 0 15px rgba(0, 242, 254, 0.8);
+        animation: pulse 2s infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .license-status.dashboard-license-status .license-progress .progress-bar {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 4px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    .license-status.dashboard-license-status .license-progress .progress-fill {
+        height: 100%;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    }
+    .progress-fill.status-active {
+        background: linear-gradient(90deg, #4caf50, #66bb6a);
+    }
+    .progress-fill.status-low {
+        background: linear-gradient(90deg, #ff9800, #ffb74d);
+    }
+    .progress-fill.status-limit {
+        background: linear-gradient(90deg, #f44336, #ef5350);
+    }
+    .progress-fill.status-unlimited {
+        background: linear-gradient(90deg, #2196f3, #64b5f6);
+        box-shadow: 0 0 12px rgba(33, 150, 243, 0.6);
+    }
+    .license-status.dashboard-license-status .license-progress .progress-text {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.6);
+        text-align: center;
+        display: block;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
 </style>
 <div class="overlay"></div>
 <!--
@@ -1012,7 +1138,7 @@
 -->
 <div id="DashHeader" class="grid dashboard">
     <div class="grid numbers">
-        <div class="dial"></div>
+        <!--<div class="dial"></div> -->
         <a href="./identities">
             <div class="totalPod">
                 <div id="TotalIdentities" class="total"></div>
@@ -1050,17 +1176,44 @@
                 <div class="label" data-i18n="ServicePolicies"></div>
             </div>
         </a>
+        
+        <!--
         <a id="NetVisualizer" href="./network-visualizer">
             <div class="iconLink">
                 <div class="topology-icon"></div>
-                <div class="label" data-i18n="Network"></div>
-                <div class="label" data-i18n="Visualizer"></div>
+                <div class="label" data-i18n="Architecture"></div>
             </div>
         </a>
+        -->
+
+        <!-- License Status Card 放在 Architecture Visualizer 旁邊 -->
+        <div class="license-status dashboard-license-status" id="DashboardLicenseStatus">
+            <div class="license-header">
+                <span class="license-title">License : </span>
+                <span class="license-status-badge" id="LicenseStatusBadge">-</span>
+            </div>
+            <div class="license-info">
+                <div class="license-count">
+                    <span class="count-label">Register : </span>
+                    <span class="count-value" id="LicenseIdentities">-</span>
+                </div>
+                <div class="license-time">
+                    <span class="time-label">Activation : </span>
+                    <span class="time-value" id="LicenseStartDate">-</span>
+                </div>
+                <div class="license-time">
+                    <span class="time-label">Expiration : </span>
+                    <span class="time-value" id="LicenseEndDate">-</span>
+                </div>
+                <div class="license-time">
+                    <span class="time-label">Remaining Days: </span>
+                    <span class="time-value" id="LicenseDaysRemaining">-</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="containers-wrapper">
-
     <div class="os-stats-container">
         <div class="sessions-grid">
             <h3>OS Distribution</h3>
@@ -1254,6 +1407,8 @@
                     page.map.invalidateSize();
                 }, 1000);   
                 page.loadOSStats();
+                // identities 載入完成時刷新 license 狀態
+                if (typeof updateLicenseStatus === 'function') updateLicenseStatus();
             },
             reset: function(e) {
                 $("#Host").val("localhost");
@@ -1376,9 +1531,9 @@
                 const sessionsList = document.getElementById('sessionsList');
                 sessionsList.innerHTML = '';
 
-                // 過濾掉 Identity 為 "Default Admin" 的記錄
+                // 過濾掉 Identity 為 "Default Admin" 以及 type 為 "Router" 的記錄，只保留 type 為 "Identity"
                 const filteredSessions = sessions.filter(session => 
-                    session.identity?.name !== "Default Admin"
+                    session.identity?.name !== "Default Admin" 
                 );
 
                 if (filteredSessions.length === 0) {
@@ -1609,21 +1764,36 @@
 
                 // Count OS types
                 identities.forEach(identity => {
+                    let os = "other";
+                    let osString = "";
                     if (identity.envInfo) {
-                        let os = "other";
-                        if (identity.envInfo.osVersion && identity.envInfo.osVersion.toLowerCase().indexOf("windows") >= 0) {
+                        if (identity.envInfo.osVersion) osString += identity.envInfo.osVersion + " ";
+                        if (identity.envInfo.os) osString += identity.envInfo.os;
+                        osString = osString.toLowerCase();
+
+                        // iOS
+                        if (/(iphone|ipad|ios)/.test(osString)) {
+                            os = "ios";
+                        }
+                        // Android
+                        else if (osString.includes("android")) {
+                            os = "android";
+                        }
+                        // Mac
+                        else if (/(darwin|mac\s?os|macos|osx|macintosh)/.test(osString)) {
+                            os = "mac";
+                        }
+                        // Linux
+                        else if (/(linux|ubuntu|debian|centos|redhat|fedora|arch)/.test(osString)) {
+                            os = "linux";
+                        }
+                        // Windows
+                        else if (osString.includes("windows")) {
                             os = "windows";
-                        } else if (identity.envInfo.os) {
-                            const osLower = identity.envInfo.os.toLowerCase();
-                            if (osLower.indexOf("darwin") >= 0) {
-                                os = "mac";
-                            } else if (osLower.indexOf("linux") >= 0) {
-                                os = "linux";
-                            } else if (osLower.indexOf("android") >= 0) {
-                                os = "android";
-                            } else if (osLower.indexOf("windows") >= 0) {
-                                os = "windows";
-                            }
+                        }
+                        // 其他
+                        else {
+                            os = "other";
                         }
                         page.osStats[os].count++;
                     } else {
@@ -1656,3 +1826,100 @@
             }
         }
     </script>
+
+<script>
+// License status 動態渲染
+function updateLicenseStatus() {
+    Promise.all([
+        fetch('assets/data/license_number.json').then(r => r.json()),
+        new Promise(resolve => {
+            // 直接從 context 取得 identities 資料（如有）
+            let identities = (window.context && typeof context.get === 'function') ? context.get('identities') : null;
+            if (Array.isArray(identities)) {
+                // 過濾掉 Router 與 Default Admin
+                const filtered = identities.filter(item =>
+                    item.typeId !== 'Router' &&
+                    item.name !== 'Default Admin'
+                );
+                resolve(filtered.length);
+            } else {
+                // fallback: API
+                fetch('api/identities?limit=1000').then(r => r.json()).then(d => {
+                    if (Array.isArray(d.data)) {
+                        resolve(d.data.filter(item =>
+                            item.typeId !== 'Router' &&
+                            item.name !== 'Default Admin'
+                        ).length);
+                    } else {
+                        resolve(d.totalCount || d.total || 0);
+                    }
+                }).catch(() => resolve(0));
+            }
+        })
+    ]).then(([license, identitiesCount]) => {
+        const badge = document.getElementById('LicenseStatusBadge');
+        const identities = document.getElementById('LicenseIdentities');
+        const startDate = document.getElementById('LicenseStartDate');
+        const endDate = document.getElementById('LicenseEndDate');
+        const daysRemaining = document.getElementById('LicenseDaysRemaining');
+        let status = 'Active', statusClass = 'status-active';
+        let max = license.unlimited ? Infinity : (license.number || 0);
+        let used = identitiesCount;
+        let percent = max === Infinity ? 0 : Math.min(100, Math.round((used / max) * 100));
+        // 狀態判斷
+        const today = new Date();
+        const start = license.start_date ? new Date(license.start_date) : null;
+        const endDt = license.end_date ? new Date(license.end_date) : null;
+        const isExpired = endDt && today > endDt;
+        const isNotStarted = start && today < start;
+        if (isExpired) {
+            status = 'Expired';
+            statusClass = 'status-limit';
+        } else if (isNotStarted) {
+            status = 'Not Active';
+            statusClass = 'status-low';
+        } else if (license.unlimited) {
+            status = 'Unlimited';
+            statusClass = 'status-unlimited';
+        } else if (used >= max) {
+            status = 'Limit Reached';
+            statusClass = 'status-limit';
+        } else if ((max - used) < 3) {
+            status = 'Low Quota';
+            statusClass = 'status-low';
+        } else {
+            status = 'Active';
+            statusClass = 'status-active';
+        }
+        if (license.unlimited) {
+            identities.innerHTML = '<span class="unlimited-symbol">∞</span>';
+            startDate.innerText = 'Unlimited';
+            endDate.innerText = 'Unlimited';
+            if (daysRemaining) daysRemaining.innerHTML = '<span class="unlimited-symbol">∞</span>';
+        } else {
+            identities.innerText = `${used} / ${max}`;
+            startDate.innerText = license.start_date || '-';
+            endDate.innerText = license.end_date || '-';
+            // 計算剩餘天數
+            if (daysRemaining) {
+                if (license.end_date) {
+                    const diff = Math.ceil((endDt - today) / (1000 * 60 * 60 * 24));
+                    daysRemaining.innerText = diff >= 0 ? diff : 0;
+                } else {
+                    daysRemaining.innerText = '--';
+                }
+            }
+        }
+        badge.innerText = status;
+        badge.className = 'license-status-badge ' + statusClass;
+    });
+}
+updateLicenseStatus();
+
+// 為 dashboard 每個卡片加上點擊時刷新 license 狀態
+Array.from(document.querySelectorAll('#DashHeader .grid.numbers a')).forEach(function(card) {
+    card.addEventListener('click', function() {
+        setTimeout(updateLicenseStatus, 500); // 延遲以確保資料已變動
+    });
+});
+</script>

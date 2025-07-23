@@ -30,13 +30,19 @@ import {ExtensionService, SHAREDZ_EXTENSION} from "../../features/extendable/ext
 import {Service} from "../../models/service";
 import {TableCellNameComponent} from "../../features/data-table/cells/table-cell-name/table-cell-name.component";
 import {Router} from "@angular/router";
+import {ZITI_DATA_SERVICE, ZitiDataService} from "../../services/ziti-data.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ConfigurationsPageService extends ListPageServiceClass {
 
-    private paging = this.DEFAULT_PAGING;
+    private paging = {
+        page: 1,
+        total: 10,
+        offset: 0,
+        limit: 10,
+    };
 
     resourceType = 'configs';
     selectedConfig: any = {};
@@ -53,7 +59,8 @@ export class ConfigurationsPageService extends ListPageServiceClass {
         filterService: DataTableFilterService,
         csvDownloadService: CsvDownloadService,
         @Inject(SHAREDZ_EXTENSION) extService: ExtensionService,
-        protected override router: Router
+        protected override router: Router,
+        @Inject(ZITI_DATA_SERVICE) private zitiDataSvc: ZitiDataService
     ) {
         super(settings, filterService, csvDownloadService, extService, router);
         this.getConfigTypes();
@@ -153,9 +160,18 @@ export class ConfigurationsPageService extends ListPageServiceClass {
             });
     }
 
-    getData(filters?: FilterObj[], sort?: any) {
-        // we can customize filters or sorting here before moving on...
-        return super.getTableData('configs', this.paging, filters, sort)
+    override getData(filters?: FilterObj[], sort?: any, page?: any): Promise<any> {
+        page = page || 1;
+        this.paging.page = page;
+
+        if (sort) {
+            this.paging['sort'] = sort.sortBy;
+            this.paging['order'] = sort.ordering;
+        }
+        
+        console.log(`[ConfigurationsPageService] getData called with page: ${page}. Final paging object:`, this.paging);
+
+        return this.zitiDataSvc.get('configs', this.paging, filters)
             .then((results: any) => {
                 return this.processData(results);
             });

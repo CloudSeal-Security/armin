@@ -191,7 +191,7 @@ export class IdentityFormComponent extends ProjectableForm implements OnInit, On
       page: 1,
       searchOn: "name",
       sort: "name",
-      total: 100
+      total: 10
     }
     this.zitiService.get('cas', paging, []).then((result: any) => {
       this.cas = [...result.data];
@@ -209,7 +209,7 @@ export class IdentityFormComponent extends ProjectableForm implements OnInit, On
       page: 1,
       searchOn: "name",
       sort: "name",
-      total: 100
+      total: 10
     }
     this.zitiService.get('auth-policies', paging, []).then((result: any) => {
       this.authPolicies = [...result.data];

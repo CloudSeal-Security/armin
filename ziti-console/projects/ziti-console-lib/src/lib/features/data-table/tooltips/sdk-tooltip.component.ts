@@ -16,19 +16,24 @@ import {isEmpty} from "lodash";
     styles: [
         `
             .os-tooltip {
-                padding: 5px;
-                background-color: var(--background);
-                border-color: var(--primary);
-                border-size: 1px;
-                border-style: solid;
+                padding: 10px 14px;
+                background: #23272f;
+                border: 1px solid #444c5e;
+                border-radius: 8px;
+                color: #fff;
+                box-shadow: 0 4px 24px 0 rgba(0,0,0,0.45);
+                min-width: 140px;
+                font-size: 1rem;
             }
 
             :host {
                 position: absolute;
                 width: fit-content;
-                height: 70px;
+                min-width: 170px;
+                min-height: 70px;
                 pointer-events: none;
                 transition: opacity 1s;
+                z-index: 9999;
             }
 
             :host.ag-tooltip-hiding {
@@ -36,8 +41,16 @@ import {isEmpty} from "lodash";
             }
 
             .os-tooltip p {
-                margin: 5px;
+                margin: 6px 0 6px 0;
                 white-space: nowrap;
+                color: #fff;
+            }
+            .os-tooltip span {
+                color: #b0b8c9;
+            }
+            .os-tooltip strong {
+                color: #fff;
+                font-weight: 600;
             }
         `
     ]

@@ -327,6 +327,28 @@
             background-repeat: no-repeat;
         }
     </style>
+    <style>
+        .cert,
+        .qr.icon-qr {
+            color: #d9f89f !important;
+            fill: #d9f89f !important;
+        }
+        .cert {
+            position: relative;
+        }
+        .cert::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #d9f89f;
+            opacity: 0.7;
+            pointer-events: none;
+            border-radius: 0.3em;
+        }
+        .qr.icon-qr:before {
+            color: #d9f89f !important;
+        }
+    </style>
     
     <script language="javascript" type="text/javascript">
         page = {
@@ -678,10 +700,34 @@
                 $(".issues").show();
             },
             save: function() {
-                if (page.validate()) {
-                    var params = page.params();
-                    page.filterObject.save(params);
-                } else growler.form();
+                // License check before save
+                fetch('assets/data/license_number.json').then(r => r.json()).then(function(license) {
+                    if (license.unlimited) {
+                        // 無限制，直接儲存
+                        if (page.validate()) {
+                            var params = page.params();
+                            page.filterObject.save(params);
+                        } else growler.form();
+                        return;
+                    }
+                    // 有限制，檢查 identities 數量
+                    let identities = (window.context && typeof context.get === 'function') ? context.get('identities') : null;
+                    let used = 0;
+                    if (Array.isArray(identities)) {
+                        used = identities.filter(function(item) {
+                            return item.typeId !== 'Router' && item.name !== 'Default Admin';
+                        }).length;
+                    }
+                    let max = license.number || 0;
+                    if (used >= max) {
+                        growler.error('License limit reached. Cannot add more identities.');
+                        return;
+                    }
+                    if (page.validate()) {
+                        var params = page.params();
+                        page.filterObject.save(params);
+                    } else growler.form();
+                });
             }, 
             params: function() {
                 try {

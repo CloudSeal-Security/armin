@@ -437,7 +437,7 @@ input {
 }
 
 .form-field-label {
-  color: var(--stroke);
+  color: #fff !important;
   font-size: 0.875rem;
   font-weight: 600;
   display: flex;
@@ -456,6 +456,7 @@ input {
   padding-left: 0.8125rem;
   padding-right: 0.8125rem;
   font-size: 0.8125rem;
+  color: #fff !important;
 }
 
 .button-row-right {
@@ -1294,21 +1295,26 @@ lib-tag-selector {
   }
 }
 
-.attag,
-.hashtag {
-  .tag-name {
-    padding-left: 0.625rem;
-    padding-right: 0.625rem;
-    color: #FFF;
-    position: relative;
-    float: left;
-    line-height: 1.875rem;
-    border-radius: var(--inputBorderRadius);
-    margin-left: 0.125rem;
-    margin-bottom: 0.625rem;
-    margin-top: 0.625rem;
-    transition: var(--transition);
-  }
+.hashtag, .attag {
+  display: inline-block;
+  border-radius: 0.375rem;
+  padding: 0.25em 0.75em;
+  line-height: 1.8;
+  font-size: 95%;
+  margin-right: 0.5em;
+  margin-bottom: 0.25em;
+  background-color: #03499d !important;
+  color: #fff !important;
+  position: relative;
+}
+
+.attag {
+  background-color: #040245 !important;
+}
+
+.attag.error, .hashtag.error {
+  background-color: var(--red) !important;
+  color: #fff !important;
 }
 
 .dropdown-loading {
@@ -1836,4 +1842,24 @@ a {
 
 .ag-row.ag-row-even {
   background-color: #e280;
+}
+
+label {
+  color: #fff !important;
+}
+
+.hashtag.clickable {
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.hashtag.clickable.clicked {
+  cursor: default;
+  background-color: var(--menu);
+  color: #FFF;
+}
+
+.hashtag.clickable:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }

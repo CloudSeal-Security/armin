@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {debounce, isNumber} from "lodash";
 import {DataTableFilterService, FilterObj} from "../data-table-filter.service";
 
@@ -33,7 +33,6 @@ export class FilterBarComponent {
   @Input() startCount: string = '-';
   @Input() endCount: string = '-';
   @Input() totalCount: string = '-';
-  @Input() currentPage: number = 1;
 
   filtering = false;
   filterString = '';
@@ -59,22 +58,19 @@ export class FilterBarComponent {
   }
 
   nextPage() {
-    this.currentPage++;
-    this.filterService.changePage(this.currentPage);
+    this.filterService.changePage(this.filterService.currentPage + 1);
   }
 
   prevPage() {
-    this.currentPage--;
-    this.filterService.changePage(this.currentPage);
+    this.filterService.changePage(this.filterService.currentPage - 1);
   }
 
   get nextDisabled() {
-    if (!isNumber(this.totalCount) || !isNumber(this.endCount) || this.filtering) {
-      return true;
-    }
-    const total: any = Number.parseInt(this.totalCount);
-    const end: any = Number.parseInt(this.endCount);
-    return end >= total;
+    const total = Number.parseInt(this.totalCount, 10);
+    const end = Number.parseInt(this.endCount, 10);
+    const isDisabled = !isNumber(total) || !isNumber(end) || this.filtering || end >= total;
+    console.log(`[FilterBarComponent] nextDisabled check. total: ${total}, end: ${end}, filtering: ${this.filtering}, isDisabled: ${isDisabled}`);
+    return isDisabled;
   }
 
   get prevDisabled() {
@@ -86,8 +82,7 @@ export class FilterBarComponent {
   }
 
   inputChanged() {
-    this.currentPage = 1;
-    this.filterService.currentPage = this.currentPage;
+    this.filterService.currentPage = 1;
     const filterObj: FilterObj = {
       filterName: this.filterName,
       columnId: this.filterColumn,
@@ -96,7 +91,6 @@ export class FilterBarComponent {
     };
     this.filterService.updateFilter(filterObj)
   }
-
 
   removeFilter(filterObj: FilterObj) {
     this.filterService.removeFilter(filterObj);

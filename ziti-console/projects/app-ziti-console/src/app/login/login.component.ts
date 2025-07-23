@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     handleOAuthLogin(extJwtSigner: any) {
         this.oauthLoading = extJwtSigner.name;
         this.authService.configureOAuth(extJwtSigner).then((result) => {
-            if (result) {
+            if (result?.success) {
                 delay(() => {
                     this.oauthLoading = '';
                 }, 4000);
@@ -143,7 +143,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     handleControllerInvalid(controllerInvalid = false) {
         if (controllerInvalid) {
-            this.helpText = `NOTE: The controller url is relative to the server running the Z-Gate Administration Console. \n 
+            this.helpText = `NOTE: The controller url is relative to the server running the Ziti Administration Console. \n 
                     For example, if you are running the ziti controller and ZAC inside docker, the controller URL should be reachable from the same server that's hosting ZAC. \n 
                     In this case, that would be the hostname of the container running the ziti controller image. \n `;
             this.controllerInvalid = true;
@@ -239,6 +239,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     get controllerSelectPlaceholder() {
-        return this.settingsService.allowControllerAdd ? 'Add a New Edge Controller' : 'Select an Edge Controller';
+        return this.settingsService.allowControllerAdd ? 'Add a New Commander' : 'Select a Commander';
     }
 }

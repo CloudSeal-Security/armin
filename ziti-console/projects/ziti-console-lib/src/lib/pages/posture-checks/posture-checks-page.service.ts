@@ -177,9 +177,13 @@ export class PostureChecksPageService extends ListPageServiceClass {
         ];
     }
 
-    getData(filters?: FilterObj[], sort?: any) {
+    getData(filters?: FilterObj[], sort?: any, page?: any) {
         // we can customize filters or sorting here before moving on...
-        return super.getTableData('posture-checks', this.paging, filters, sort)
+        const paging = {...this.paging};
+        if (page) {
+            paging.offset = (page - 1) * paging.total;
+        }
+        return super.getTableData('posture-checks', paging, filters, sort)
             .then((results: any) => {
                 return this.processData(results);
             });

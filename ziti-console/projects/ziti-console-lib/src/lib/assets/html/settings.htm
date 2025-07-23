@@ -59,8 +59,10 @@
         data: [],
         init: function() {
             this.events();
-            var mode = localStorage.getItem("mode");
-            if (mode!=="light") $("#IsDark").addClass("on");
+            localStorage.setItem("mode", "dark");
+            $("#IsDark").addClass("on");
+            $("#IsDark").addClass("disabled");
+            $("#IsDark").css("pointer-events", "none");
             if (localStorage.getItem("hideTags")=="yes") $("#HideTags").addClass("on");
             if (localStorage.getItem("filterAfterSave")=="on") $("#IsFilterAfterSave").addClass("on");
             var mode = localStorage.getItem("Transitions");
@@ -112,16 +114,9 @@
             });	                          
         },
         events: function() {
-            $("#IsDark").click(page.swap);
             $("#HideTags").click(page.hide);
             $("#Transitions").click(page.transitions);
             $("#IsFilterAfterSave").click(page.filterAfter);
-        },
-        swap: function() {
-            var mode = "light";
-            if ($("#IsDark").hasClass("on")) mode = "dark";
-            localStorage.setItem("mode", mode);
-            window.location.reload();
         },
         hide: function() {
             var mode = "no";

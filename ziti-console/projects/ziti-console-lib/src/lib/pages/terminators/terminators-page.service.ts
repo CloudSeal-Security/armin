@@ -202,7 +202,7 @@ export class TerminatorsPageService extends ListPageServiceClass {
     }
 
     getData(filters?: FilterObj[], sort?: any) {
-        if (sort.sortBy === 'name') {
+        if (sort && sort.sortBy === 'name') {
             sort.sortBy = 'address';
         }
         return super.getTableData('terminators', this.paging, filters, sort)

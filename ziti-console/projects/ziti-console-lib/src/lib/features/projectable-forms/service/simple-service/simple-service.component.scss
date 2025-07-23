@@ -176,7 +176,7 @@
 }
 
 .form-field-input-group .form-field-title {
-  color: var(--offWhite);
+  color: #87CEEB !important; /* 天蓝色 */
   margin-bottom: 0.625rem;
 }
 
@@ -195,6 +195,9 @@
 }
 
 ::ng-deep .simple-service-wrapper {
+  .form-field-title {
+    color: #87CEEB !important; /* 天蓝色 */
+  }
   input {
     max-height: var(--defaultInputHeight);
     min-height: 0rem;

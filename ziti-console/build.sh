@@ -15,6 +15,6 @@ sudo  npm install -g @angular/cli@16.0.0-next.0
 # WARN: deployUrl deprecated since Angular 13, pending decommission in future ng CLI
 ng build ziti-console --base-href "$1" --deploy-url "$1" --configuration "production"
 
-sudo rm -fr /opt/openziti/share/console/*
-sudo cp -r ./dist/app-ziti-console/* /opt/openziti/share/console/
-sudo systemctl restart ziti-controller.service
+sudo rm -fr /opt/zgate/share/console/*
+sudo cp -r ./dist/app-ziti-console/* /opt/zgate/share/console/
+sudo systemctl restart zgate-controller.service

@@ -7,8 +7,8 @@
     "port": 1408,
     "portTLS": 8443,
     "logo": "",
-    "primary": "",
-    "secondary": "",
+    "primary": "#e28015",
+    "secondary": "#03499d",
     "allowPersonal":  true,
     "rejectUnauthorized": false,
     "mail": { 

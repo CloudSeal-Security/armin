@@ -59,13 +59,6 @@
                         [hidden]="item === this.hideOption"
                         class="select2-selection_choice_item"
                     >
-                        <div class="attag select2-selection__choice" title="@{{ item }}">
-                            <span
-                                    class="select2-selection__choice__remove"
-                                    role="presentation"
-                            >×</span
-                            ><span class="select2-selection__choice__text">@{{ item }}</span>
-                        </div>
                         <div class="tag-name select2-selection__choice" title="@{{ item }}">
                             <span
                                     (click)="removeNamedAttribute(item); $event.stopPropagation()"
@@ -127,9 +120,9 @@
                     <div class="attag select2-results__option" title="@{{ option }}" role="treeitem">
                         @{{ option }}
                     </div>
-                    <div class="tag-name select2-results__option" title="@{{ option }}" role="treeitem">
+                    <!--<div class="tag-name select2-results__option" title="@{{ option }}" role="treeitem">
                         @{{ option }}
-                    </div>
+                    </div> -->
                 </li>
             </ul>
         </span>

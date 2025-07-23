@@ -23,6 +23,8 @@ import {GrowlerService} from "../../messaging/growler.service";
 import {GrowlerModel} from "../../messaging/growler.model";
 import {Identity} from "../../../models/identity";
 import {SETTINGS_SERVICE, SettingsService} from "../../../services/settings.service";
+import {LicenseCheckService, LicenseCheckResult} from "../../../services/license-check.service";
+import {LicenseEventsService} from "../../../services/license-events.service";
 
 
 export const IDENTITY_EXTENSION_SERVICE = new InjectionToken<any>('IDENTITY_EXTENSION_SERVICE');
@@ -36,11 +38,29 @@ export class IdentityFormService {
     constructor(
         @Inject(SETTINGS_SERVICE) public settingsService: SettingsService,
         @Inject(ZITI_DATA_SERVICE) private zitiService: ZitiDataService,
-        private growlerService: GrowlerService
+        private growlerService: GrowlerService,
+        private licenseCheckService: LicenseCheckService,
+        private licenseEventsService: LicenseEventsService
     ) {}
  
-    save(formData) {
+    async save(formData) {
         const isUpdate = !isEmpty(formData.id);
+        
+        // 如果是創建新身份，先檢查許可證
+        if (!isUpdate) {
+            const licenseCheck = await this.licenseCheckService.canCreateIdentity();
+            if (!licenseCheck.canCreate) {
+                const growlerData = new GrowlerModel(
+                    'error',
+                    'License Restriction',
+                    'Cannot Create Identity',
+                    licenseCheck.reason || 'License check failed',
+                );
+                this.growlerService.show(growlerData);
+                throw new Error(licenseCheck.reason || 'License check failed');
+            }
+        }
+
         const data: any = this.getIdentityDataModel(formData, isUpdate);
         const svc = isUpdate ? this.zitiService.patch.bind(this.zitiService) : this.zitiService.post.bind(this.zitiService);
         return svc('identities', data, formData.id).then((result) => {
@@ -51,6 +71,13 @@ export class IdentityFormService {
                 `Successfully ${isUpdate ? 'updated' : 'created'} Identity: ${formData.name}`,
             );
             this.growlerService.show(growlerData);
+            
+            // 通知許可證狀態更新
+            if (!isUpdate) {
+                this.licenseEventsService.notifyIdentityCreated(result);
+            } else {
+                this.licenseEventsService.notifyIdentityUpdated(result);
+            }
         }).catch((resp) => {
             const errorMessage = this.zitiService.getErrorMessage(resp);
             const growlerData = new GrowlerModel(

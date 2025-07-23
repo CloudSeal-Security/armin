@@ -28,6 +28,9 @@ import {ResetEnrollmentComponent} from "../../features/reset-enrollment/reset-en
 import {IDENTITY_EXTENSION_SERVICE} from "../../features/projectable-forms/identity/identity-form.service";
 import {ExtensionService} from "../../features/extendable/extensions-noop.service";
 import { IdentityServicePathComponent } from "../../features/visualizer/identity-service-path/identity-service-path.component";
+import {LicenseCheckService} from "../../services/license-check.service";
+import {LicenseEventsService} from "../../services/license-events.service";
+import {ConfirmComponent} from "../../features/confirm/confirm.component";
 
 @Component({
   selector: 'lib-identities',
@@ -51,6 +54,8 @@ export class IdentitiesPageComponent extends ListPageComponent implements OnInit
       private router: Router,
       consoleEvents: ConsoleEventsService,
       @Inject(IDENTITY_EXTENSION_SERVICE) private extService: ExtensionService,
+      private licenseCheckService: LicenseCheckService,
+      private licenseEventsService: LicenseEventsService,
   ) {
     super(filterService, svc, consoleEvents, dialogForm, extService);
   }
@@ -78,7 +83,7 @@ export class IdentitiesPageComponent extends ListPageComponent implements OnInit
   headerActionClicked(action: string) {
     switch(action) {
       case 'add':
-        this.svc.openEditForm();
+        this.checkLicenseAndCreate();
         break;
       case 'edit':
         this.svc.openUpdate();
@@ -91,6 +96,23 @@ export class IdentitiesPageComponent extends ListPageComponent implements OnInit
         this.openBulkDelete(selectedItems, label);
         break;
       default:
+    }
+  }
+
+  /**
+   * 檢查許可證並創建身份
+   */
+  async checkLicenseAndCreate() {
+    try {
+      const licenseCheck = await this.licenseCheckService.canCreateIdentity();
+      if (licenseCheck.canCreate) {
+        this.svc.openEditForm();
+      } else {
+        // 許可證檢查失敗，錯誤消息已經在服務中顯示
+        console.warn('License check failed:', licenseCheck.reason);
+      }
+    } catch (error) {
+      console.error('Error during license check:', error);
     }
   }
 
@@ -127,7 +149,7 @@ export class IdentitiesPageComponent extends ListPageComponent implements OnInit
         this.svc.openEditForm(event?.item?.id);
         break;
       case 'create':
-        this.svc.openEditForm();
+        this.checkLicenseAndCreate();
         break;
       case 'override':
         this.svc.openOverridesModal(event.item);
@@ -244,5 +266,41 @@ export class IdentitiesPageComponent extends ListPageComponent implements OnInit
       return confirm('You have unsaved changes. Do you want to leave this page and discard your changes or stay on this page?');
     }
     return true;
+  }
+
+  /**
+   * 重寫 openBulkDelete 方法，在身份刪除成功後通知許可證更新
+   */
+  protected override openBulkDelete(selectedItems: any[], entityTypeLabel = 'item(s)') {
+    const selectedIds = selectedItems.map((row) => {
+      return row.id;
+    });
+    const selectedNames = selectedItems.map((item) => {
+      return item.name;
+    });
+    const countLabel = selectedItems.length > 1 ? selectedItems.length : '';
+    const data = {
+      appendId: 'DeleteIdentities',
+      title: 'Delete',
+      message: `Are you sure you would like to delete the following ${countLabel} ${entityTypeLabel}?`,
+      bulletList: selectedNames,
+      confirmLabel: 'Yes',
+      cancelLabel: 'Oops, no get me out of here',
+      imageUrl: '../../assets/svgs/Confirm_Trash.svg',
+      showCancelLink: true
+    };
+    this.dialogRef = this.dialogForm.open(ConfirmComponent, {
+      data: data,
+      autoFocus: false,
+    });
+    this.dialogRef.afterClosed().subscribe((result) => {
+      if (result?.confirmed) {
+        this.svc.removeItems(selectedIds).then(() => {
+          this.refreshData(this.svc.currentSort);
+          // 通知許可證狀態更新
+          this.licenseEventsService.notifyIdentityDeleted(selectedItems);
+        });
+      }
+    });
   }
 }

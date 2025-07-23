@@ -583,7 +583,7 @@ export class ZacWrapperService extends ZacWrapperServiceClass {
             page: 1,
             searchOn: "name",
             sort: "name",
-            total: 50
+            total: 10
         }
         let configTypeResult = await this.getZitiEntities('config-types', paging);
         const clientConfigId = configTypeResult.data[0]?.id;

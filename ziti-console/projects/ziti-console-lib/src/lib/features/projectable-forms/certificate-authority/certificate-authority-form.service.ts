@@ -32,7 +32,7 @@ export class CertificateAuthorityFormService {
         page: 1,
         searchOn: "name",
         sort: "name",
-        total: 100
+        total: 10
     }
 
     constructor(

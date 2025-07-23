@@ -179,7 +179,7 @@ export class SimpleServiceComponent extends ProjectableForm {
     const paging = {
       searchOn: 'name',
       filter: filter || '',
-      total: 30,
+      total: 10,
       page: 1,
       sort: 'name',
       order: 'asc'

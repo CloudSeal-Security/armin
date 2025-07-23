@@ -47,7 +47,7 @@ export class ConfigurationService {
             page: 1,
             searchOn: "name",
             sort: "name",
-            total: 50
+            total: 10
         };
         return this.dataService.get('config-types', paging, [])
         .then(async (body: any) => {

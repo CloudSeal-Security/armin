@@ -36,7 +36,7 @@ export class ZacWrapperComponent implements OnInit, OnDestroy {
   loading = false;
   pageHtml: any = '';
   subscription = new Subscription();
-  title = 'Z-Gate ( SDP )';
+  title = 'Z-Gate';
   waitingForSession = true;
   pageLoading = false;
   settings: any = {};

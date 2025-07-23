@@ -77,6 +77,7 @@ export abstract class ListPageComponent {
             })
         );
         this.filterService.pageChanged.subscribe(page => {
+            console.log(`[ListPageComponent] pageChanged event received with page: ${page}`);
             this.refreshData();
         });
         this.subscription.add(
@@ -122,6 +123,7 @@ export abstract class ListPageComponent {
     refreshData(sort?: { sortBy: string, ordering: string }, hardRefresh = false): void {
         this.isLoading = true;
         sort = sort ? sort : this.svc.currentSort;
+        console.log(`[ListPageComponent] refreshData called. Using page: ${this.filterService.currentPage}`);
         this.svc.getData(this.filterService.filters, sort, this.filterService.currentPage)
             .then((data: any) => {
                 this.rowData = [];
@@ -140,6 +142,8 @@ export abstract class ListPageComponent {
                 } else {
                     this.endCount = data.meta.pagination.offset + data.meta.pagination.limit;
                 }
+                console.log(`[ListPageComponent] Counts updated. total: ${this.totalCount}, start: ${this.startCount}, end: ${this.endCount}`);
+                this.filterService.currentPage = Math.floor((data.meta.pagination.offset / data.meta.pagination.limit) + 1);
                 this.updateSelectedItems();
                 this.refreshCells();
             }).finally(() => {

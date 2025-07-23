@@ -1,0 +1,50 @@
+<div class="license-status-container" *ngIf="!isLoading">
+  <div class="license-status-card" [ngClass]="getStatusClass()" *ngIf="!isLoading">
+    <div class="license-header">
+      <div class="license-title">
+        <i class="icon-license"></i>
+        <span>License </span>
+      </div>
+      <div class="license-status-badge" [ngClass]="getStatusClass()">
+        {{ getStatusText() }}
+      </div>
+    </div>
+    
+    <div class="license-content">
+      <div class="license-info">
+        <div class="info-row">
+          <span class="label">Identities:</span>
+          <span class="value" [ngClass]="{'unlimited': isUnlimited}">
+            <span *ngIf="isUnlimited" class="unlimited-symbol">∞</span>
+            <span *ngIf="!isUnlimited">{{ getDisplayText() }}</span>
+          </span>
+        </div>
+        <div class="info-row" *ngIf="!isUnlimited">
+          <span class="label">Remaining:</span>
+          <span class="value" [ngClass]="{'warning': remainingCount < 5}">{{ remainingCount }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Valid Period:</span>
+          <span class="value" [ngClass]="{'unlimited': isUnlimited}">
+            {{ getTimeDisplayText() }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="license-progress" *ngIf="!isUnlimited">
+        <div class="progress-bar">
+          <div class="progress-fill" 
+               [style.width.%]="getProgressPercentage()"
+               [ngClass]="getStatusClass()">
+          </div>
+        </div>
+        <div class="progress-text">{{ getProgressPercentage() | number:'1.0-0' }}% used</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="license-loading" *ngIf="isLoading">
+  <div class="loading-spinner"></div>
+  <span>Loading license information...</span>
+</div> 

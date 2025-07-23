@@ -10,9 +10,9 @@
                 <div class="login-modal-main">
                     <lib-selector-input
                             *ngIf="!svc.originIsController"
-                            [fieldName]="'Edge Controller'"
+                            [fieldName]="'Commander'"
                             [(fieldValue)]="selectedEdgeController"
-                            [placeholder]="'Select an Edge Controller'"
+                            [placeholder]="'Select a Commander'"
                             [valueList]="edgeControllerList"
                             [labelColor]="'white'"
                             (fieldValueChange)="edgeChanged($event)"
@@ -22,12 +22,12 @@
                                       [(fieldValue)]="username"
                                       [autocomplete]="'username'"
                                       [labelColor]="'white'"
-                                      [placeholder]="'enter username of controller'"></lib-string-input>
+                                      [placeholder]="'enter username'"></lib-string-input>
                     <lib-password-input [fieldName]="'Password'"
                                         [(fieldValue)]="password"
                                         [autocomplete]="'current-password'"
                                         [labelColor]="'white'"
-                                        [placeholder]="'enter password of controller'"></lib-password-input>
+                                        [placeholder]="'enter password'"></lib-password-input>
                     <span class="login-error-message" *ngIf="loginFailed">Login Failed</span>
                 </div>
             </div>

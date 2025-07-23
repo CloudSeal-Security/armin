@@ -74,6 +74,7 @@ export class DataTableFilterService {
     }
 
     changePage(page: any) {
+        console.log(`[DataTableFilterService] changePage called with: ${page}. Current page was: ${this.currentPage}`);
         this.currentPage = page;
         this.pageChanged.next(page);
     }

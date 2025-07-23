@@ -42,7 +42,7 @@ export class OverridesService {
         const paging = {
             searchOn: 'name',
             filter: filter,
-            total: 30,
+            total: 10,
             page: 1,
             sort: 'name',
             order: 'asc'
@@ -56,7 +56,7 @@ export class OverridesService {
         const paging = {
             searchOn: 'name',
             filter: filter,
-            total: 30,
+            total: 10,
             page: 1,
             sort: 'name',
             order: 'desc'

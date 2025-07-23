@@ -104,6 +104,10 @@
       cursor: default;
     }
   }
+
+  label {
+    color: #fff !important;
+  }
 }
 
 .jsonButton {
@@ -231,5 +235,12 @@
 ::ng-deep .form-field-extended-fields {
   .form-field-extended-fields {
     padding: 0;
+  }
+}
+
+/* 强制将 Advanced Service 表单中的 form-field-title 改为天蓝色 */
+::ng-deep .edge-router-form-container {
+  .form-field-title {
+    color: #87CEEB !important; /* 天蓝色 */
   }
 }
