@@ -1,5 +1,6 @@
-version update : 2025/04/24
+version update : 2025/07/24
 
+armin 1.0.0
 ziti	1.5.4
 controller 1.5.4
 console	3.12.4
